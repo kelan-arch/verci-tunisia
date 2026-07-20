@@ -20,7 +20,7 @@ const PAGE_BG = "#f0ebe1";
 const Page = forwardRef<HTMLDivElement, { children: React.ReactNode }>(
   function Page({ children }, ref) {
     return (
-      <div ref={ref} className="page-solid relative h-full overflow-hidden rounded-[8px]" style={{ background: PAGE_BG }}>
+      <div ref={ref} className="page-solid relative overflow-hidden" style={{ background: PAGE_BG, width: "100%", height: "100%", borderRadius: 8 }}>
         <div className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='30' y='35' font-family='serif' font-size='10' fill='%23000' text-anchor='middle' opacity='0.5'%3EV%3C/text%3E%3C/svg%3E")`, backgroundSize: "45px 45px" }} />
         {children}
       </div>
@@ -88,6 +88,8 @@ export default function Itinerary() {
   const onFlip = useCallback((e: any) => setCurrentPage(e.data), []);
   const currentDay = Math.floor(currentPage / 2);
 
+  const BOOK_WIDTH = "min(560px, 92vw)";
+
   return (
     <section className="py-32 md:py-48">
 
@@ -103,60 +105,50 @@ export default function Itinerary() {
       <div className="relative flex flex-col items-center px-4 md:px-[6vw]" style={{ minHeight: "min(500px, 85vw)" }}>
         <AnimatePresence mode="wait">
           {!isOpen ? (
-            /* ===== CLOSED PASSPORT — portrait ===== */
+            /* ===== CLOSED — just the passport ===== */
             <motion.div
               key="closed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ rotateY: -120, opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-              style={{ perspective: "800px", transformStyle: "preserve-3d" }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              className="flex flex-col items-center"
             >
               <motion.div
-                className="relative cursor-pointer overflow-hidden rounded-[8px]"
+                className="relative cursor-pointer"
                 style={{
-                  width: "min(280px, 75vw)",
-                  height: "min(380px, calc(75vw * 1.36))",
-                  background: "linear-gradient(160deg, #1a2744 0%, #0f1b33 40%, #0a1428 100%)",
-                  boxShadow: "0 25px 60px rgba(0,0,0,0.5), 3px 0 6px rgba(0,0,0,0.2)",
-                  transformOrigin: "left center",
+                  width: `calc(${BOOK_WIDTH} * 0.85)`,
+                  aspectRatio: "747 / 855",
                 }}
-                whileHover={{ rotateY: -8, scale: 1.01 }}
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.3 }}
                 onClick={() => setIsOpen(true)}
               >
-                {/* Leather texture */}
-                <div className="pointer-events-none absolute inset-0 opacity-30" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23ffffff' fill-opacity='0.03'/%3E%3C/svg%3E")` }} />
-                {/* Spine */}
-                <div className="absolute bottom-0 left-0 top-0 w-[5px]" style={{ background: "linear-gradient(90deg, rgba(0,0,0,0.3), transparent)" }} />
-                {/* Page edges */}
-                <div className="absolute bottom-4 right-[2px] top-4 w-[3px]" style={{ background: "linear-gradient(90deg, rgba(230,225,215,0.35), rgba(230,225,215,0.15))" }} />
-
-                <div className="flex h-full flex-col items-center justify-between py-10">
-                  <p className="font-sans text-[6px] font-semibold tracking-[0.5em] uppercase" style={{ color: "#b8974a" }}>Verci &times; WanderQuest</p>
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full border" style={{ borderColor: "rgba(184,151,74,0.3)" }}>
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full border" style={{ borderColor: "rgba(184,151,74,0.15)" }}>
-                        <span style={{ color: "#b8974a", fontSize: "18px" }}>&#9733;</span>
-                      </div>
-                    </div>
-                    <p className="font-sans text-[13px] font-semibold tracking-[0.35em] uppercase" style={{ color: "#b8974a" }}>Passport</p>
-                    <p className="font-sans text-[5px] tracking-[0.4em] uppercase" style={{ color: "rgba(184,151,74,0.4)" }}>Tunisia &bull; Oct 2026</p>
-                  </div>
-                  <p className="font-sans text-[5px] tracking-[0.3em] uppercase" style={{ color: "rgba(184,151,74,0.2)" }}>Click to open</p>
-                </div>
+                <Image
+                  src="/images/tunisia-passport-clean.png"
+                  alt="Tunisian Passport"
+                  fill
+                  className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.7)]"
+                  sizes="280px"
+                  priority
+                />
               </motion.div>
+
+              <p className="mt-5 font-sans text-[9px] uppercase tracking-[0.4em]" style={{ color: "rgba(196,167,125,0.3)" }}>
+                Click to view itinerary
+              </p>
             </motion.div>
           ) : (
             /* ===== OPEN BOOK ===== */
             <motion.div
               key="open"
-              initial={{ opacity: 0, scale: 0.92 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.92 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="flex flex-col items-center"
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="flex flex-col items-center pt-20"
             >
-              <div className="relative overflow-hidden rounded-[8px]" style={{ width: "min(560px, 92vw)", boxShadow: "0 25px 60px rgba(0,0,0,0.5)" }}>
+              <div className="relative overflow-hidden rounded-[8px]" style={{ width: BOOK_WIDTH, boxShadow: "0 25px 60px rgba(0,0,0,0.5)" }}>
                 {/* Spine */}
                 <div className="pointer-events-none absolute left-1/2 top-0 bottom-0 z-50 -translate-x-1/2" style={{ width: "3px" }}>
                   <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, transparent, rgba(0,0,0,0.06), transparent)" }} />
