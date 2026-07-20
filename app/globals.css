@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-inter);
+  --color-sand: #c4a77d;
+  --color-sand-light: #d4bd97;
+  --color-stone: #8a7d6b;
+  --color-night: #0a0a0a;
+  --color-night-light: #141414;
+  --color-night-lighter: #1a1a1a;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    box-sizing: border-box;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background: var(--color-night);
+  color: #ededed;
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Section divider */
+.section-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-sand), transparent);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(196, 167, 125, 0.3);
+  border-radius: 2px;
+}
+
+/* Pageflip — cream background, fully opaque pages */
+.stf__wrapper,
+.stf__parent,
+.stf__block {
+  background: #f0ebe1 !important;
+}
+.stf__item {
+  background-color: #f0ebe1 !important;
+  opacity: 1 !important;
+}
+.page-solid {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: #f0ebe1;
+  opacity: 1;
+}
+
+/* Image hover zoom */
+.img-zoom {
+  overflow: hidden;
+}
+.img-zoom img {
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.img-zoom:hover img {
+  transform: scale(1.05);
+}
