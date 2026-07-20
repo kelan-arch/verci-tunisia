@@ -79,7 +79,12 @@ body {
   background: #f0ebe1;
   opacity: 1;
 }
-.stf__wrapper {
+.stf__wrapper,
+.stf__block {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+.stf__item {
   border-radius: 8px !important;
   overflow: hidden !important;
 }

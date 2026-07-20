@@ -100,7 +100,7 @@ export default function Itinerary() {
         </div>
       </div>
 
-      <div className="relative flex flex-col items-center px-4 md:px-[6vw]">
+      <div className="relative flex flex-col items-center px-4 md:px-[6vw]" style={{ minHeight: "min(500px, 85vw)" }}>
         <AnimatePresence mode="wait">
           {!isOpen ? (
             /* ===== CLOSED PASSPORT — portrait ===== */
