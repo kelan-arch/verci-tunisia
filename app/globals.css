@@ -79,6 +79,10 @@ body {
   background: #f0ebe1;
   opacity: 1;
 }
+.stf__wrapper {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
 
 /* Image hover zoom */
 .img-zoom {

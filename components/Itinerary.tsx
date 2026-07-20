@@ -20,7 +20,7 @@ const PAGE_BG = "#f0ebe1";
 const Page = forwardRef<HTMLDivElement, { children: React.ReactNode }>(
   function Page({ children }, ref) {
     return (
-      <div ref={ref} className="page-solid relative h-full overflow-hidden" style={{ background: PAGE_BG }}>
+      <div ref={ref} className="page-solid relative h-full overflow-hidden rounded-[8px]" style={{ background: PAGE_BG }}>
         <div className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='30' y='35' font-family='serif' font-size='10' fill='%23000' text-anchor='middle' opacity='0.5'%3EV%3C/text%3E%3C/svg%3E")`, backgroundSize: "45px 45px" }} />
         {children}
       </div>
@@ -113,7 +113,7 @@ export default function Itinerary() {
               style={{ perspective: "800px", transformStyle: "preserve-3d" }}
             >
               <motion.div
-                className="relative cursor-pointer overflow-hidden rounded-[3px]"
+                className="relative cursor-pointer overflow-hidden rounded-[8px]"
                 style={{
                   width: "min(280px, 75vw)",
                   height: "min(380px, calc(75vw * 1.36))",
