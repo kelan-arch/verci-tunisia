@@ -156,7 +156,7 @@ export default function Itinerary() {
               transition={{ duration: 0.5, delay: 0.15 }}
               className="flex flex-col items-center"
             >
-              <div className="relative" style={{ width: "min(560px, 92vw)", boxShadow: "0 25px 60px rgba(0,0,0,0.5)" }}>
+              <div className="relative overflow-hidden rounded-[8px]" style={{ width: "min(560px, 92vw)", boxShadow: "0 25px 60px rgba(0,0,0,0.5)" }}>
                 {/* Spine */}
                 <div className="pointer-events-none absolute left-1/2 top-0 bottom-0 z-50 -translate-x-1/2" style={{ width: "3px" }}>
                   <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, transparent, rgba(0,0,0,0.06), transparent)" }} />
