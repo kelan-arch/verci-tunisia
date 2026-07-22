@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import PassportOverlay from "@/components/PassportOverlay";
@@ -141,12 +141,25 @@ const stops = [
   },
 ];
 
+const FINE_POINTER = "(hover: hover) and (pointer: fine)";
+function subscribeFinePointer(onChange: () => void) {
+  const mq = window.matchMedia(FINE_POINTER);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
 export default function RouteMap() {
   const ref = useRef(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const wasDragged = useRef(false);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  // Drag only on fine-pointer devices — on touch screens it hijacks scrolling.
+  const canDrag = useSyncExternalStore(
+    subscribeFinePointer,
+    () => window.matchMedia(FINE_POINTER).matches,
+    () => false
+  );
 
   return (
     <section className="bg-paper py-[clamp(5rem,12vh,9rem)]" id="route">
@@ -190,11 +203,11 @@ export default function RouteMap() {
 
           {/* Resting passport — draggable around the map */}
           <motion.button
-            drag
+            drag={canDrag}
             dragConstraints={frameRef}
             dragMomentum={false}
             dragElastic={0.15}
-            style={{ rotate: 7, willChange: "transform" }}
+            style={{ rotate: 7, willChange: "transform", touchAction: canDrag ? "none" : "auto" }}
             whileHover={{ scale: 1.05, rotate: 4 }}
             whileDrag={{ scale: 1.06, rotate: 0 }}
             transition={{ type: "spring", stiffness: 320, damping: 24 }}
@@ -204,7 +217,7 @@ export default function RouteMap() {
               if (!wasDragged.current) setSelectedDay(0);
             }}
             aria-label="Open the itinerary passport"
-            className="group absolute right-2 top-[clamp(90px,15vw,140px)] z-[3] w-[clamp(128px,19vw,200px)] cursor-grab touch-none border-0 bg-transparent p-0 active:cursor-grabbing md:-right-[clamp(8px,3vw,52px)]"
+            className="group absolute right-2 top-[clamp(90px,15vw,140px)] z-[3] w-[clamp(128px,19vw,200px)] cursor-grab border-0 bg-transparent p-0 active:cursor-grabbing md:-right-[clamp(8px,3vw,52px)]"
           >
             <span
               className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[3px] bg-ink px-2.5 py-1 font-sans text-[8.5px] uppercase tracking-[0.22em] text-paper opacity-0 transition-opacity duration-300 group-hover:opacity-100"
