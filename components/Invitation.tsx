@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Invitation() {
   return (
     <header
-      className="relative flex min-h-svh flex-col overflow-hidden md:min-h-[calc(100svh/0.9)]"
+      className="relative flex min-h-[calc(100svh/0.9)] flex-col overflow-hidden"
       style={{
         background:
           "linear-gradient(180deg, #aebfc9 0%, #c3cbc6 34%, #ddd6bd 62%, #e8dfc4 100%)",

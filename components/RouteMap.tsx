@@ -194,7 +194,7 @@ export default function RouteMap() {
             dragConstraints={frameRef}
             dragMomentum={false}
             dragElastic={0.15}
-            style={{ rotate: 7 }}
+            style={{ rotate: 7, willChange: "transform" }}
             whileHover={{ scale: 1.05, rotate: 4 }}
             whileDrag={{ scale: 1.06, rotate: 0 }}
             transition={{ type: "spring", stiffness: 320, damping: 24 }}
@@ -216,7 +216,7 @@ export default function RouteMap() {
               alt="Republic of Tunisia passport"
               width={276}
               height={396}
-              className="pointer-events-none h-auto w-full drop-shadow-[0_14px_22px_rgba(0,0,0,0.35)]"
+              className="pointer-events-none h-auto w-full will-change-transform drop-shadow-[0_14px_22px_rgba(0,0,0,0.35)] [transform:translateZ(0)]"
               draggable={false}
             />
           </motion.button>
@@ -376,6 +376,8 @@ export default function RouteMap() {
                   }
                 }}
               >
+                {/* invisible enlarged hit area for touch */}
+                <circle cx={s.cx} cy={s.cy} r={26} fill="transparent" stroke="none" />
                 {s.illus}
                 <g className="ring">
                   <circle

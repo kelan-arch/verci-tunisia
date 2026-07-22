@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 
@@ -50,6 +50,7 @@ const collage = [
 export default function Pitch() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [lifted, setLifted] = useState<number | null>(null);
 
   return (
     <section ref={ref} className="bg-paper py-[clamp(5rem,11vh,8rem)]">
@@ -113,10 +114,15 @@ export default function Pitch() {
             transition={{ duration: 0.9, delay: 0.45 }}
             className="relative mt-4 h-[420px] md:h-[540px]"
           >
-            {collage.map((photo) => (
+            {collage.map((photo, i) => (
               <figure
                 key={photo.src}
-                className={`absolute bg-[#fbf6ea] p-2.5 pb-7 shadow-[0_10px_26px_rgba(74,59,42,0.22)] transition-all duration-300 ease-out hover:z-20 hover:-translate-y-2 hover:rotate-0 hover:scale-[1.06] hover:shadow-[0_28px_56px_rgba(74,59,42,0.38)] before:absolute before:-top-3 before:left-1/2 before:h-[26px] before:w-[84px] before:-translate-x-1/2 before:rotate-[-2deg] before:bg-[rgba(214,199,163,0.85)] before:shadow-[0_1px_3px_rgba(0,0,0,0.12)] before:content-[''] ${photo.className}`}
+                onClick={() => setLifted(lifted === i ? null : i)}
+                className={`absolute cursor-pointer bg-[#fbf6ea] p-2.5 pb-7 shadow-[0_10px_26px_rgba(74,59,42,0.22)] transition-all duration-300 ease-out hover:z-20 hover:-translate-y-2 hover:rotate-0 hover:scale-[1.06] hover:shadow-[0_28px_56px_rgba(74,59,42,0.38)] before:absolute before:-top-3 before:left-1/2 before:h-[26px] before:w-[84px] before:-translate-x-1/2 before:rotate-[-2deg] before:bg-[rgba(214,199,163,0.85)] before:shadow-[0_1px_3px_rgba(0,0,0,0.12)] before:content-[''] ${photo.className} ${
+                  lifted === i
+                    ? "z-20! -translate-y-2! rotate-0! scale-[1.06]! shadow-[0_28px_56px_rgba(74,59,42,0.38)]!"
+                    : ""
+                }`}
               >
                 <Image
                   src={photo.src}

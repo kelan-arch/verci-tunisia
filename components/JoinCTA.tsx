@@ -79,6 +79,7 @@ export default function JoinCTA() {
                   : {}
               }
               whileHover={{ y: -170, rotate: 9, scale: 1.04 }}
+              whileTap={{ y: -170, rotate: 9, scale: 1.04 }}
               transition={{ type: "spring", stiffness: 240, damping: 24 }}
               className="absolute -top-[clamp(3rem,7vw,5.5rem)] right-[4%] z-0 w-[46%] max-w-[230px] overflow-hidden rounded-[6px] shadow-[0_16px_44px_rgba(0,0,0,0.55)]"
             >
