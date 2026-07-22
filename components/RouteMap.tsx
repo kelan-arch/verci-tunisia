@@ -204,7 +204,7 @@ export default function RouteMap() {
               if (!wasDragged.current) setSelectedDay(0);
             }}
             aria-label="Open the itinerary passport"
-            className="group absolute -right-[clamp(8px,3vw,52px)] top-[clamp(90px,15vw,140px)] z-[3] w-[clamp(128px,19vw,200px)] cursor-grab touch-none border-0 bg-transparent p-0 active:cursor-grabbing"
+            className="group absolute right-2 top-[clamp(90px,15vw,140px)] z-[3] w-[clamp(128px,19vw,200px)] cursor-grab touch-none border-0 bg-transparent p-0 active:cursor-grabbing md:-right-[clamp(8px,3vw,52px)]"
           >
             <span
               className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[3px] bg-ink px-2.5 py-1 font-sans text-[8.5px] uppercase tracking-[0.22em] text-paper opacity-0 transition-opacity duration-300 group-hover:opacity-100"
