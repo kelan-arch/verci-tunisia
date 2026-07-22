@@ -69,7 +69,17 @@ export default function Invitation() {
         </motion.div>
       </div>
 
-      <div className="relative h-[clamp(180px,30vh,320px)]">
+      {/* Photo fades in from transparent over the header gradient — no
+          color-matched overlay, so there is no seam to see. */}
+      <div
+        className="relative -mt-[clamp(60px,10vh,120px)] h-[clamp(240px,40vh,440px)]"
+        style={{
+          maskImage:
+            "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.35) 35%, rgba(0,0,0,0.8) 58%, #000 78%)",
+          WebkitMaskImage:
+            "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.35) 35%, rgba(0,0,0,0.8) 58%, #000 78%)",
+        }}
+      >
         <Image
           src="/images/tunisia-076.jpg"
           alt="Questers on the dunes of the Sahara"
@@ -77,12 +87,6 @@ export default function Invitation() {
           priority
           className="object-cover object-[center_62%]"
           style={{ filter: "sepia(0.32) saturate(0.92) contrast(0.98) brightness(1.04)" }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(180deg, #e8dfc4 0%, rgba(232,223,196,0) 26%)",
-          }}
         />
       </div>
 
