@@ -33,6 +33,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Render the whole page at 90% by default on desktop — the layout was
+   tuned at this density. Mobile keeps 100% (clamp minimums already apply). */
+@media (min-width: 768px) {
+  html {
+    zoom: 0.9;
+  }
+}
+
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
   background: var(--color-paper);
