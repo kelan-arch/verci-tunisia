@@ -36,7 +36,7 @@ export default function SaharaNight() {
 
       <div
         ref={ref}
-        className="relative z-[2] mx-auto grid w-[min(1120px,92vw)] items-center gap-[clamp(2rem,6vw,6rem)] md:grid-cols-[1.05fr_0.95fr]"
+        className="relative z-[2] mx-auto grid w-[min(1120px,92vw)] grid-cols-1 items-center gap-[clamp(2rem,6vw,6rem)] md:grid-cols-[1.05fr_0.95fr]"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}

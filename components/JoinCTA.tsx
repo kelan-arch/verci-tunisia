@@ -43,7 +43,7 @@ export default function JoinCTA() {
           the <em className="text-sand">caravan.</em>
         </motion.h2>
 
-        <div className="mt-12 grid items-center gap-[clamp(2.5rem,6vw,6rem)] md:grid-cols-2">
+        <div className="mt-12 grid grid-cols-1 items-center gap-[clamp(2.5rem,6vw,6rem)] md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, y: 26 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -98,17 +98,17 @@ export default function JoinCTA() {
             transition={{ duration: 0.9, delay: 0.45 }}
             className="relative z-[1] overflow-hidden rounded-[10px] bg-[#f6efdd] text-ink shadow-[0_24px_60px_rgba(0,0,0,0.5)] before:absolute before:-left-[13px] before:top-[64%] before:h-[26px] before:w-[26px] before:rounded-full before:bg-[#12100c] before:content-[''] after:absolute after:-right-[13px] after:top-[64%] after:h-[26px] after:w-[26px] after:rounded-full after:bg-[#12100c] after:content-['']"
           >
-            <div className="px-7 pb-0 pt-6">
-              <div className="flex items-center justify-between font-serif text-[2rem] font-semibold">
+            <div className="px-5 pb-0 pt-6 md:px-7">
+              <div className="flex items-center justify-between font-serif text-[1.65rem] font-semibold md:text-[2rem]">
                 <span>NYC</span>
-                <span className="font-sans text-[1.1rem] tracking-[0.3em] text-brick">·····✈·····</span>
+                <span className="font-sans text-[0.9rem] tracking-[0.3em] text-brick md:text-[1.1rem]">·····✈·····</span>
                 <span>TUN</span>
               </div>
               <div className="mt-0.5 flex justify-between font-sans text-[9.5px] uppercase tracking-[0.18em] text-ink-soft">
                 <span>New York</span>
                 <span>Tunis-Carthage</span>
               </div>
-              <div className="mt-5 flex gap-8 font-sans text-[0.72rem]">
+              <div className="mt-5 flex flex-wrap gap-x-7 gap-y-3 font-sans text-[0.72rem] md:gap-8">
                 {[
                   ["Passenger", "QUESTER / VERCI"],
                   ["Date", "19 OCT 2026"],
@@ -125,11 +125,11 @@ export default function JoinCTA() {
               </div>
               <div className="mt-5" style={{ borderTop: "2px dashed rgba(74,59,42,0.35)" }} />
             </div>
-            <div className="flex items-center justify-between px-7 pb-6 pt-4">
-              <span className="rotate-[-5deg] rounded-md border-[2.5px] border-brick bg-[rgba(184,68,44,0.05)] px-3.5 py-2.5 font-sans text-[0.8rem] font-semibold uppercase tracking-[0.22em] text-brick">
+            <div className="flex flex-wrap items-center justify-between gap-3 px-5 pb-6 pt-4 md:px-7">
+              <span className="rotate-[-5deg] rounded-md border-[2.5px] border-brick bg-[rgba(184,68,44,0.05)] px-3 py-2 font-sans text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-brick md:px-3.5 md:py-2.5 md:text-[0.8rem]">
                 Join the Quest
               </span>
-              <span className="font-mono text-[1.6rem] tracking-[-1px] opacity-80">
+              <span className="font-mono text-[1.05rem] tracking-[-1px] opacity-80 md:text-[1.6rem]">
                 ▮I015IL▮I0▮LI▮1▮0IIL▮
               </span>
             </div>

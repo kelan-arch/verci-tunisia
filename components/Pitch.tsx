@@ -74,7 +74,7 @@ export default function Pitch() {
           <em className="text-brick">know in full.</em>
         </motion.h2>
 
-        <div className="mt-12 grid items-start gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1.15fr_0.85fr]">
+        <div className="mt-12 grid grid-cols-1 items-start gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1.15fr_0.85fr]">
           <motion.div
             initial={{ opacity: 0, y: 26 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}

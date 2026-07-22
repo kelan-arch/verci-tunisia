@@ -56,7 +56,7 @@ export default function Oases() {
           and desert <em className="text-terracotta">coexist.</em>
         </motion.h2>
 
-        <div className="mt-12 grid gap-[clamp(1rem,2.5vw,2rem)] md:grid-cols-12">
+        <div className="mt-12 grid grid-cols-1 gap-[clamp(1rem,2.5vw,2rem)] md:grid-cols-12">
           {oases.map((oasis, i) => (
             <motion.figure
               key={oasis.src}
