@@ -51,9 +51,9 @@ export default function Oases() {
           transition={{ duration: 0.9, delay: 0.15 }}
           className="mt-3 font-serif text-[clamp(2.4rem,6vw,4.6rem)] font-medium leading-[1.02]"
         >
-          Where water, brick
+          The desert keeps
           <br />
-          and desert <em className="text-terracotta">coexist.</em>
+          its <em className="text-terracotta">gardens.</em>
         </motion.h2>
 
         <div className="mt-12 grid grid-cols-1 gap-[clamp(1rem,2.5vw,2rem)] md:grid-cols-12">

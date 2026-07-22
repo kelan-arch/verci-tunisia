@@ -185,7 +185,7 @@ export default function PassportOverlay({
                   maxShadowOpacity={0.3}
                   drawShadow={true}
                   flippingTime={800}
-                  usePortrait={false}
+                  usePortrait={true}
                   startPage={(openDay ?? 0) * 2}
                   autoSize={true}
                   clickEventForward={true}
