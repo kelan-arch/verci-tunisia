@@ -103,9 +103,10 @@ Sunrise in the desert. Breakfast at camp. Private transfer north toward Tunis wi
 - `tunisia-110.jpg` — Itinerary map
 - `tunisia-114.jpg` — Map/location pin
 - `tunisia-passport-clean.png` — Tunisian passport cover, transparent bg (map trigger object)
-- `brand/stone-mark.jpg` — hand-drawn "VERCI Tunisia" calligraphy stone-stamp mark (hero)
+- `brand/stone-mark.png` — photographic "VERCI Tunisia" calligraphy stone, transparent bg (hero)
+- `brand/stone-mark.jpg` — halftone print version of the stone mark (unused, kept as reference)
 - `brand/invitation-cards.jpg` — designer invitation card set
-- `brand/poster.jpg` — designer poster reference (OG image)
+- `brand/poster.jpg` — designer poster with final dates (Pitch collage, OG image)
 
 ## Tech Stack
 - Next.js 16 (App Router, Turbopack)

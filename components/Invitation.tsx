@@ -44,13 +44,16 @@ export default function Invitation() {
           className="relative my-4 w-[clamp(240px,42vw,460px)]"
         >
           <Image
-            src="/images/brand/stone-mark.jpg"
+            src="/images/brand/stone-mark.png"
             alt="Verci Tunisia — hand-carved calligraphy mark"
             width={540}
-            height={676}
+            height={675}
             priority
-            className="w-full mix-blend-multiply"
-            style={{ filter: "contrast(1.05)" }}
+            className="w-full"
+            style={{
+              filter:
+                "sepia(0.28) saturate(0.9) contrast(1.04) drop-shadow(0 18px 30px rgba(60,50,35,0.28))",
+            }}
           />
         </motion.div>
 
