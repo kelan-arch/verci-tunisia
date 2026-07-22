@@ -1,14 +1,23 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-serif: var(--font-playfair);
+  --font-serif: var(--font-cormorant);
   --font-sans: var(--font-inter);
+  --font-arabic: var(--font-amiri);
+
+  /* Field-journal palette */
+  --color-paper: #f0e7d3;
+  --color-paper-deep: #e7dcc2;
+  --color-page: #f0ebe1;
+  --color-ink: #4a3b2a;
+  --color-ink-soft: #7a6a52;
+  --color-brick: #b8442c;
+  --color-terracotta: #c4744a;
+  --color-dusk: #7c4630;
+  --color-night: #0d1117;
+  --color-nightblue: #0b1220;
   --color-sand: #c4a77d;
-  --color-sand-light: #d4bd97;
-  --color-stone: #8a7d6b;
-  --color-night: #0a0a0a;
-  --color-night-light: #141414;
-  --color-night-lighter: #1a1a1a;
+  --color-passport: #2b4f44;
 }
 
 @layer base {
@@ -26,8 +35,8 @@ html {
 
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
-  background: var(--color-night);
-  color: #ededed;
+  background: var(--color-paper);
+  color: var(--color-ink);
   overflow-x: hidden;
 }
 
@@ -38,28 +47,136 @@ body {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.055;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
 }
 
-/* Section divider */
-.section-divider {
-  width: 60px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-sand), transparent);
+/* Halftone print texture */
+.halftone {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(74, 59, 42, 0.28) 0.5px, transparent 0.6px);
+  background-size: 3.5px 3.5px;
+  mix-blend-mode: multiply;
+  opacity: 0.45;
+}
+
+/* Dotted editorial rules (from the V3 PDF layout) */
+.dotted-rule {
+  border: none;
+  border-top: 1.5px dotted var(--color-ink-soft);
+  opacity: 0.6;
+}
+
+/* Section label: red kicker with trailing dotted rule */
+.sec-label {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--color-brick);
+}
+.sec-label::after {
+  content: "";
+  flex: 1;
+  border-top: 1.5px dotted var(--color-ink-soft);
+  opacity: 0.55;
+  transform: translateY(-3px);
+}
+
+/* ===== Route map (SVG) ===== */
+.map-label {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--color-ink);
+  letter-spacing: 0.02em;
+}
+.map-sub {
+  font-family: var(--font-serif), serif;
+  font-style: italic;
+  font-size: 13.5px;
+  fill: var(--color-ink-soft);
+}
+.map-sea {
+  font-family: var(--font-serif), serif;
+  font-style: italic;
+  font-size: 17px;
+  fill: #7d94a2;
+  letter-spacing: 0.28em;
+}
+.map-geo {
+  font-family: var(--font-serif), serif;
+  font-style: italic;
+  font-size: 11px;
+  fill: rgba(122, 106, 82, 0.75);
+}
+.map-stop {
+  cursor: pointer;
+}
+.map-stop .ring {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1.2);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.map-stop:hover .ring,
+.map-stop:focus .ring {
+  transform: scale(1.35);
+}
+.map-stop .tag {
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(4px);
+}
+.map-stop:hover .tag,
+.map-stop:focus .tag {
+  opacity: 1;
+  transform: none;
+}
+.map-stop .illus {
+  transition: transform 0.35s ease;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+.map-stop:hover .illus {
+  transform: scale(1.12) rotate(-2deg);
+}
+.route-path {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 2;
+  stroke-dasharray: 1 7;
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+.route-return {
+  stroke: var(--color-ink-soft);
+  stroke-width: 1.6;
+  stroke-dasharray: 1 8;
+  opacity: 0.5;
+}
+@media (max-width: 800px) {
+  .map-sub,
+  .map-geo {
+    display: none;
+  }
 }
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 4px;
+  height: 4px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(196, 167, 125, 0.3);
+  background: rgba(184, 68, 44, 0.35);
   border-radius: 2px;
 }
 
@@ -98,4 +215,16 @@ body {
 }
 .img-zoom:hover img {
   transform: scale(1.05);
+}
+
+/* Tozeur brickwork divider */
+.brick-divider {
+  height: 26px;
+  background:
+    repeating-linear-gradient(90deg, rgba(196, 116, 74, 0.8) 0 34px, transparent 34px 40px),
+    repeating-linear-gradient(90deg, transparent 0 17px, rgba(196, 116, 74, 0.8) 17px 51px, transparent 51px 57px);
+  background-size: 100% 11px, 100% 11px;
+  background-position: 0 0, 0 15px;
+  background-repeat: repeat-x;
+  opacity: 0.8;
 }

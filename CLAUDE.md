@@ -20,8 +20,8 @@ Questers arrive at Tunis-Carthage airport and check in at Sidi Bou Said. White w
 ### Day 2 — Medina of Tunis
 Private transfer to Tunis (~20 min). Guided walk through the living quarters of the medina — a UNESCO World Heritage Site founded in the 7th century with over 700 monuments still standing. Workshops at Dar El Sanaa: dinanderie (copper engraving), Arabic calligraphy, traditional embroidery, wood sculpture, and mosaic. Each led by a master craftsperson. Dinner in La Goulette, a historic port town.
 
-### Day 3 — Maya's Olive Groves
-Morning departure to Maya's olive groves, where her renowned olive oil Ayla is produced — a family private estate in the Tunisian countryside. Return to Sidi Bou Said by late afternoon.
+### Day 3 — Testour & Dougga
+Testour, settled by Moriscos expelled from Spain — the Great Mosque, the malouf musical tradition. Then Dougga, the best-preserved Africo-Roman city in North Africa: never abruptly abandoned, never looted. Return to Sidi Bou Said in the evening.
 
 ### Day 4 — Cap Bon: A Day at Sea
 Full day aboard a large motor catamaran along the Cap Bon coastline. Swimming, snorkelling, stand-up paddle. Lunch served on board. The peninsula juts northeast from Tunisia toward Sicily — the closest point in Africa to Europe. In October, the sea is still warm, the light is clear, and the crowds are long gone.
@@ -48,7 +48,7 @@ Sunrise in the desert. Breakfast at camp. Private transfer north toward Tunis wi
 ## Key Experiences
 - UNESCO Medina guided walk through hidden quarters
 - Artisan workshops: copper engraving, Arabic calligraphy, embroidery, wood sculpture, mosaic
-- Private olive estate visit (Ayla olive oil)
+- Testour's Andalusian heritage & the Roman city of Dougga
 - Catamaran sailing on the Mediterranean
 - Mountain oases: Chebika waterfalls, Mides canyon
 - Star Wars filming locations (Mos Espa)
@@ -102,13 +102,25 @@ Sunrise in the desert. Breakfast at camp. Private transfer north toward Tunis wi
 - `tunisia-108.jpg` — Tunisian street with market stalls
 - `tunisia-110.jpg` — Itinerary map
 - `tunisia-114.jpg` — Map/location pin
+- `tunisia-passport-clean.png` — Tunisian passport cover, transparent bg (map trigger object)
+- `brand/stone-mark.jpg` — hand-drawn "VERCI Tunisia" calligraphy stone-stamp mark (hero)
+- `brand/invitation-cards.jpg` — designer invitation card set
+- `brand/poster.jpg` — designer poster reference (OG image)
 
 ## Tech Stack
-- Next.js 15 (App Router)
+- Next.js 16 (App Router, Turbopack)
 - Tailwind CSS v4
 - Framer Motion
+- react-pageflip (passport flipbook)
 - TypeScript
 - Deployed on Vercel
 
 ## Design Direction
-Cinematic editorial — dark backgrounds, full-bleed photography, oversized serif typography. Co-Star B&W DNA but letting the Tunisia photography breathe. Luxury travel editorial meets brutalist web design.
+Vintage expedition print / field journal — warm cream paper (#f0e7d3), sepia ink (#4a3b2a), brick-red serif accents (#b8442c), halftone grain textures. The page follows a "light-to-dark journey": sun-bleached paper in the north (hero, medina, map) darkening through terracotta dusk (Tozeur) to desert night (Sahara, CTA), mirroring the actual route south.
+
+Key structure:
+- **Invitation hero** — designer's stone calligraphy mark + poster typography on cream
+- **RouteMap** (`components/RouteMap.tsx`) — hand-drawn SVG map of Tunisia (feTurbulence ink wobble), 7 stamped day-markers with per-stop illustrations, dashed caravan route. Clicking a stop (or the resting passport object) opens the **PassportOverlay**
+- **PassportOverlay** (`components/PassportOverlay.tsx`) — react-pageflip flipbook as a bottom-sheet modal, green Tunisian passport cover, opens at the clicked day (`startPage = day * 2`)
+- Itinerary data is canonical in `lib/itinerary.ts` (V3, from design/PQ_VERCI_V3.pdf) — shared by map + passport
+- Designer references live in `design/` (not deployed); the approved HTML mock is `public/ui-overhaul-mock.html`

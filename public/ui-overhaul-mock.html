@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verci in Tunisia — UI Overhaul Mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS ============ */
+  :root {
+    --paper: #f0e7d3;
+    --paper-deep: #e7dcc2;
+    --ink: #4a3b2a;
+    --ink-soft: #7a6a52;
+    --red: #b8442c;
+    --terracotta: #c4744a;
+    --dusk: #7c4630;
+    --night: #0d1117;
+    --night-blue: #0b1220;
+    --sand: #c4a77d;
+    --sky: #b9c8cf;
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans: "Inter", -apple-system, sans-serif;
+    --arabic: "Amiri", serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; }
+
+  /* ============ TEXTURES ============ */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .halftone {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(74,59,42,0.28) 0.5px, transparent 0.6px);
+    background-size: 3.5px 3.5px;
+    mix-blend-mode: multiply;
+    opacity: .45;
+  }
+
+  .dotted-rule {
+    border: none;
+    border-top: 1.5px dotted var(--ink-soft);
+    opacity: .6;
+  }
+
+  /* ============ HERO / INVITATION ============ */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    background:
+      linear-gradient(180deg, #aebfc9 0%, #c3cbc6 34%, #ddd6bd 62%, #e8dfc4 100%);
+    overflow: hidden;
+  }
+  .hero-inner {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(2rem, 5vh, 4rem) 1.5rem 0;
+    z-index: 2;
+  }
+  .hero-kicker {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: .38em;
+    text-transform: uppercase;
+    color: #f4efdf;
+    text-shadow: 0 1px 8px rgba(60,70,80,.25);
+    margin-bottom: .9rem;
+  }
+  .hero-dates {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    text-align: center;
+    font-size: clamp(1.9rem, 4.6vw, 3.4rem);
+    line-height: 1.1;
+    color: #f7f1de;
+    text-shadow: 0 1px 14px rgba(60,70,80,.28);
+  }
+  .hero-mark {
+    width: clamp(240px, 42vw, 460px);
+    mix-blend-mode: multiply;
+    filter: contrast(1.05);
+    margin: 1rem auto;
+  }
+  .hero-verci-line {
+    width: min(1060px, 92vw);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3.4vw, 2.6rem);
+    color: var(--red);
+    padding-bottom: 1.6rem;
+  }
+  .hero-verci-line .in { font-style: italic; }
+  .hero-photo {
+    position: relative;
+    height: clamp(180px, 30vh, 320px);
+    background: url("images/tunisia-076.jpg") center 62% / cover no-repeat;
+    filter: sepia(.32) saturate(.92) contrast(.98) brightness(1.04);
+  }
+  .hero-photo::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, #e8dfc4 0%, rgba(232,223,196,0) 26%);
+  }
+  .hero-scroll {
+    position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+    z-index: 3; font-size: 10px; letter-spacing: .3em; text-transform: uppercase;
+    color: #fdf8ea; text-shadow: 0 1px 6px rgba(0,0,0,.4);
+    animation: bob 2.4s ease-in-out infinite;
+  }
+  @keyframes bob { 0%,100% { transform: translate(-50%,0);} 50% { transform: translate(-50%,7px);} }
+
+  /* ============ MARQUEE ============ */
+  .marquee {
+    border-top: 1.5px dotted var(--ink-soft);
+    border-bottom: 1.5px dotted var(--ink-soft);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    background: var(--paper);
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: scroll 38s linear infinite;
+  }
+  .marquee span {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    margin: 0 1.1rem;
+  }
+  .marquee .ar { font-family: var(--arabic); font-size: 1.25rem; }
+  .marquee .dot { color: var(--red); }
+  @keyframes scroll { from { transform: translateX(0);} to { transform: translateX(-50%);} }
+
+  /* ============ SECTION SHARED ============ */
+  section { position: relative; }
+  .wrap { width: min(1120px, 92vw); margin: 0 auto; }
+  .sec-label {
+    display: flex; align-items: baseline; gap: 1rem;
+    font-family: var(--sans); font-size: 11px; letter-spacing: .34em;
+    text-transform: uppercase; color: var(--red);
+  }
+  .sec-label::after { content: ""; flex: 1; border-top: 1.5px dotted var(--ink-soft); opacity: .55; transform: translateY(-3px); }
+  .sec-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    line-height: 1.02;
+    margin: .8rem 0 0;
+  }
+  .sec-title em { font-style: italic; color: var(--red); }
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.vis { opacity: 1; transform: none; }
+
+  /* ============ PITCH ============ */
+  .pitch { padding: clamp(5rem, 11vh, 8rem) 0; background: var(--paper); }
+  .pitch-grid {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    margin-top: 3rem;
+    align-items: start;
+  }
+  .pitch-copy p {
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+    line-height: 1.55;
+    margin-bottom: 1.3em;
+  }
+  .pitch-copy p:first-child::first-letter {
+    font-size: 3.2em; float: left; line-height: .82;
+    padding-right: .12em; color: var(--red); font-style: italic;
+  }
+  .pitch-copy .lead-in { color: var(--red); font-weight: 600; font-style: normal; }
+  .facts { border-top: 1.5px dotted var(--ink-soft); font-size: .82rem; }
+  .facts div {
+    display: flex; justify-content: space-between; gap: 1rem;
+    padding: .8rem 2px; border-bottom: 1.5px dotted var(--ink-soft);
+  }
+  .facts dt { color: var(--ink-soft); letter-spacing: .06em; }
+  .facts dd { text-align: right; font-weight: 500; }
+  .collage { position: relative; height: 420px; margin-top: 2.4rem; }
+  .collage figure {
+    position: absolute; background: #fbf6ea; padding: 10px 10px 30px;
+    box-shadow: 0 10px 26px rgba(74,59,42,.22);
+  }
+  .collage figure img { filter: sepia(.18) saturate(.95); }
+  .collage figcaption {
+    font-family: var(--serif); font-style: italic; font-size: .85rem;
+    color: var(--ink-soft); padding-top: 8px; text-align: center;
+  }
+  .collage figure::before { /* tape */
+    content: ""; position: absolute; top: -12px; left: 50%;
+    width: 84px; height: 26px; transform: translateX(-50%) rotate(-2deg);
+    background: rgba(214,199,163,.85);
+    box-shadow: 0 1px 3px rgba(0,0,0,.12);
+  }
+  .collage .c1 { width: 58%; left: 0; top: 0; transform: rotate(-2.4deg); }
+  .collage .c2 { width: 48%; right: 0; top: 26%; transform: rotate(2deg); }
+  .collage .c3 { width: 44%; left: 8%; bottom: 0; transform: rotate(-1deg); }
+
+  /* ============ MAP ============ */
+  .route { padding: clamp(5rem, 10vh, 8rem) 0 clamp(3rem, 6vh, 5rem); background: var(--paper-deep); }
+  .route-frame {
+    position: relative;
+    margin-top: 2.6rem;
+    border: 1.5px solid rgba(74,59,42,.55);
+    outline: 1.5px dotted rgba(74,59,42,.4);
+    outline-offset: 6px;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(255,252,240,.55), transparent 60%),
+      var(--paper);
+  }
+  .route-frame svg { width: 100%; height: auto; display: block; }
+  .cartouche {
+    position: absolute; top: 18px; left: 18px; z-index: 3;
+    border: 1.5px solid var(--ink); padding: 10px 16px 8px;
+    background: rgba(240,231,211,.9);
+    box-shadow: 3px 3px 0 rgba(74,59,42,.15);
+  }
+  .cartouche h3 { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; letter-spacing: .04em; }
+  .cartouche p  { font-family: var(--serif); font-style: italic; font-size: .85rem; color: var(--ink-soft); }
+  .map-hint {
+    position: absolute; bottom: 14px; left: 16px; z-index: 3;
+    font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--red);
+  }
+  /* the passport, resting on the map */
+  .passport-obj {
+    position: absolute; bottom: -38px; right: clamp(8px, 4vw, 46px); z-index: 5;
+    width: clamp(120px, 17vw, 195px);
+    cursor: pointer; border: none; background: none; padding: 0;
+    transform: rotate(7deg);
+    transition: transform .4s cubic-bezier(.2,.8,.3,1.2);
+    filter: drop-shadow(0 22px 28px rgba(46,36,22,.45));
+  }
+  .passport-obj:hover { transform: rotate(3deg) translateY(-10px) scale(1.03); }
+  .passport-obj img { width: 100%; }
+  .passport-tag {
+    position: absolute; top: -30px; left: -74px;
+    background: #fbf6ea; color: var(--ink);
+    font-family: var(--serif); font-style: italic; font-size: .82rem;
+    padding: 7px 12px; transform: rotate(-6deg);
+    box-shadow: 0 6px 14px rgba(74,59,42,.25);
+    white-space: nowrap;
+  }
+  .passport-tag::after {
+    content: ""; position: absolute; right: -12px; top: 50%;
+    width: 26px; border-top: 1.5px dashed var(--ink-soft);
+  }
+  /* svg text + markers */
+  .m-label { font-family: var(--sans); font-size: 13px; font-weight: 600; fill: var(--ink); letter-spacing: .02em; }
+  .m-sub   { font-family: var(--serif); font-style: italic; font-size: 13.5px; fill: var(--ink-soft); }
+  .m-sea   { font-family: var(--serif); font-style: italic; font-size: 17px; fill: #7d94a2; letter-spacing: .28em; }
+  .m-geo   { font-family: var(--serif); font-style: italic; font-size: 11px; fill: rgba(122,106,82,.75); }
+  .stop { cursor: pointer; }
+  .stop .ring { transition: transform .35s cubic-bezier(.2,.8,.3,1.2); transform-box: fill-box; transform-origin: center; }
+  .stop:hover .ring, .stop:focus .ring { transform: scale(1.35); }
+  .stop .tag { opacity: 0; transition: opacity .3s ease, transform .3s ease; transform: translateY(4px); }
+  .stop:hover .tag, .stop:focus .tag { opacity: 1; transform: none; }
+  .stop .illus { transition: transform .35s ease; transform-box: fill-box; transform-origin: center bottom; }
+  .stop:hover .illus { transform: scale(1.12) rotate(-2deg); }
+  .route-path {
+    fill: none; stroke: var(--ink); stroke-width: 2;
+    stroke-dasharray: 1 7; stroke-linecap: round; opacity: .8;
+  }
+  .route-return { stroke: var(--ink-soft); stroke-width: 1.6; stroke-dasharray: 1 8; opacity: .5; }
+
+  /* ============ PASSPORT OVERLAY ============ */
+  .pp-scrim {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(13,17,23,.55);
+    backdrop-filter: blur(3px);
+    opacity: 0; pointer-events: none; transition: opacity .4s ease;
+  }
+  .pp-scrim.open { opacity: 1; pointer-events: auto; }
+  .pp-sheet {
+    position: fixed; left: 50%; bottom: 0; z-index: 201;
+    transform: translate(-50%, 110%);
+    transition: transform .55s cubic-bezier(.2,.8,.25,1);
+    width: min(880px, 96vw);
+    padding-bottom: max(env(safe-area-inset-bottom), 18px);
+  }
+  .pp-sheet.open { transform: translate(-50%, 0); }
+  .pp-book {
+    display: grid; grid-template-columns: 1fr 1fr;
+    background: #f0ebe1;
+    border: 10px solid #2b4f44; /* Tunisian passport cover green */
+    border-bottom: none;
+    border-radius: 16px 16px 0 0;
+    overflow: hidden;
+    box-shadow: 0 -18px 60px rgba(0,0,0,.45), inset 0 0 0 1.5px rgba(196,167,125,.55);
+    min-height: 460px;
+    position: relative;
+  }
+  .pp-book::after { /* spine */
+    content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(90deg, rgba(74,59,42,.0), rgba(74,59,42,.35), rgba(74,59,42,0));
+    box-shadow: 0 0 18px 6px rgba(74,59,42,.12);
+  }
+  .pp-photo { position: relative; min-height: 300px; }
+  .pp-photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; filter: sepia(.15); }
+  .pp-photo .pp-stamp {
+    position: absolute; right: 14px; top: 14px;
+    border: 2px solid rgba(184,68,44,.9); color: rgba(184,68,44,.95);
+    font-size: 9.5px; letter-spacing: .18em; padding: 7px 9px;
+    transform: rotate(6deg); border-radius: 4px; text-transform: uppercase;
+    background: rgba(240,235,225,.55); font-weight: 600;
+  }
+  .pp-info { padding: clamp(1.4rem, 3.4vw, 2.6rem); display: flex; flex-direction: column; }
+  .pp-day { font-size: 10px; letter-spacing: .34em; color: var(--red); text-transform: uppercase; margin-bottom: .8rem; }
+  .pp-title { font-family: var(--serif); font-weight: 600; font-size: clamp(1.7rem, 3.2vw, 2.4rem); line-height: 1.03; }
+  .pp-sub { font-family: var(--serif); font-style: italic; color: var(--ink-soft); margin: .35rem 0 1.1rem; }
+  .pp-desc { font-size: .9rem; line-height: 1.65; color: #5d4f3c; flex: 1; }
+  .pp-mrz {
+    margin-top: 1.2rem; padding-top: .8rem; border-top: 1.5px dotted var(--ink-soft);
+    font-family: "Courier New", monospace; font-size: .68rem; letter-spacing: .12em;
+    color: var(--ink-soft); word-break: break-all;
+  }
+  .pp-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    background: #2b4f44; color: var(--sand);
+    border-radius: 0 0 10px 10px; padding: 10px 16px;
+  }
+  .pp-nav button {
+    background: none; border: 1px solid rgba(196,167,125,.4); color: var(--sand);
+    font-family: var(--sans); font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    padding: 8px 16px; cursor: pointer; border-radius: 3px; transition: all .25s;
+  }
+  .pp-nav button:hover { background: rgba(196,167,125,.15); }
+  .pp-days { display: flex; gap: 6px; }
+  .pp-days button { padding: 6px 9px; border: none; opacity: .55; }
+  .pp-days button.on { opacity: 1; border: 1px solid var(--sand); }
+  .pp-close {
+    position: absolute; top: -46px; right: 0;
+    background: var(--paper); border: none; cursor: pointer;
+    font-family: var(--sans); font-size: 10px; letter-spacing: .26em; text-transform: uppercase;
+    padding: 10px 16px; border-radius: 4px 4px 0 0; color: var(--ink);
+  }
+
+  /* ============ POSTCARDS ============ */
+  .postcards { padding: clamp(5rem, 10vh, 8rem) 0; background: var(--paper); overflow: hidden; }
+  .pc-row {
+    display: flex; gap: clamp(1.2rem, 3vw, 2.4rem);
+    overflow-x: auto; padding: 3rem 4vw 3.4rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pc-row::-webkit-scrollbar { height: 4px; }
+  .pc-row::-webkit-scrollbar-thumb { background: rgba(184,68,44,.4); }
+  .postcard {
+    flex: 0 0 min(320px, 74vw);
+    scroll-snap-align: center;
+    background: #fbf6ea; padding: 12px 12px 0;
+    box-shadow: 0 14px 30px rgba(74,59,42,.22);
+    position: relative;
+    transition: transform .4s ease;
+  }
+  .postcard:nth-child(odd) { transform: rotate(-2.2deg); }
+  .postcard:nth-child(even) { transform: rotate(1.8deg) translateY(14px); }
+  .postcard:hover { transform: rotate(0) translateY(-6px) scale(1.02); z-index: 2; }
+  .postcard img { aspect-ratio: 3/4; object-fit: cover; width: 100%; filter: sepia(.14) saturate(1.02); }
+  .postcard .pc-meta {
+    display: flex; justify-content: space-between; align-items: center; padding: 10px 2px;
+  }
+  .postcard .pc-title { font-family: var(--serif); font-style: italic; font-size: 1.02rem; }
+  .postcard .pc-no { font-size: 9px; letter-spacing: .22em; color: var(--red); }
+  .postcard::after { /* postmark */
+    content: "TUNIS R.P. · 2026"; position: absolute; top: -16px; right: -12px;
+    width: 74px; height: 74px; border: 2px solid rgba(184,68,44,.55); border-radius: 50%;
+    color: rgba(184,68,44,.7); font-size: 7.5px; letter-spacing: .14em; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    transform: rotate(12deg); background: rgba(251,246,234,.6); padding: 8px;
+  }
+
+  /* ============ HEADING SOUTH ============ */
+  .south {
+    background: linear-gradient(180deg,
+      var(--paper) 0%, #e3cfa8 18%, var(--terracotta) 46%,
+      var(--dusk) 66%, #33202a 84%, var(--night-blue) 100%);
+    padding: clamp(6rem, 14vh, 10rem) 0;
+    color: #f6ecd8;
+  }
+  .south .wrap { text-align: center; }
+  .south-kicker { font-size: 11px; letter-spacing: .38em; text-transform: uppercase; opacity: .85; }
+  .south h2 {
+    font-family: var(--serif); font-weight: 500; font-style: italic;
+    font-size: clamp(2.2rem, 5.6vw, 4.2rem); margin: 1rem 0 4rem;
+  }
+  .south-line {
+    position: relative; height: 2px; width: min(760px, 84vw); margin: 0 auto 4rem;
+    border-top: 2px dashed rgba(246,236,216,.55);
+  }
+  .south-line span {
+    position: absolute; top: -34px; transform: translateX(-50%);
+    font-family: var(--serif); font-style: italic; font-size: .95rem; white-space: nowrap;
+  }
+  .south-line i {
+    position: absolute; top: -5px; width: 8px; height: 8px; border-radius: 50%;
+    background: #f6ecd8; transform: translateX(-50%);
+  }
+  .south-note { font-size: .85rem; letter-spacing: .06em; opacity: .75; }
+
+  /* ============ OASES ============ */
+  .oases { background: var(--night-blue); color: #efe3c8; padding: clamp(5rem, 10vh, 8rem) 0; }
+  .brick-divider {
+    height: 26px; margin-bottom: clamp(3rem, 7vh, 5rem);
+    background:
+      repeating-linear-gradient(90deg, rgba(196,116,74,.8) 0 34px, transparent 34px 40px),
+      repeating-linear-gradient(90deg, transparent 0 17px, rgba(196,116,74,.8) 17px 51px, transparent 51px 57px);
+    background-size: 100% 11px, 100% 11px;
+    background-position: 0 0, 0 15px;
+    background-repeat: repeat-x;
+    opacity: .8;
+  }
+  .oases .sec-label { color: var(--terracotta); }
+  .oases .sec-label::after { border-color: rgba(196,116,74,.5); }
+  .oases-grid {
+    display: grid; grid-template-columns: repeat(12, 1fr);
+    gap: clamp(1rem, 2.5vw, 2rem); margin-top: 3rem;
+  }
+  .oasis-card { position: relative; }
+  .oasis-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; filter: saturate(1.05) contrast(1.02); }
+  .oasis-card figcaption {
+    display: flex; justify-content: space-between;
+    font-family: var(--serif); font-style: italic; padding-top: 10px;
+    color: rgba(239,227,200,.8); font-size: .95rem;
+  }
+  .oasis-card figcaption b { font-family: var(--sans); font-style: normal; font-weight: 500; font-size: 10px; letter-spacing: .2em; color: var(--terracotta); }
+  .og-1 { grid-column: 1 / span 4; }
+  .og-2 { grid-column: 5 / span 4; margin-top: 3.4rem; }
+  .og-3 { grid-column: 9 / span 4; margin-top: 1.4rem; }
+
+  /* ============ SAHARA NIGHT ============ */
+  .sahara {
+    position: relative; background: var(--night); color: #e9e2d2;
+    padding: clamp(7rem, 16vh, 12rem) 0; overflow: hidden;
+  }
+  .stars { position: absolute; inset: 0; pointer-events: none; }
+  .stars i {
+    position: absolute; width: 2px; height: 2px; border-radius: 50%;
+    background: #fff; opacity: .7; animation: twinkle 3.4s ease-in-out infinite;
+  }
+  @keyframes twinkle { 0%,100% { opacity: .18;} 50% { opacity: .85;} }
+  .sahara .wrap { position: relative; z-index: 2; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; }
+  .sahara .sec-label { color: var(--sand); }
+  .sahara .sec-label::after { border-color: rgba(196,167,125,.35); }
+  .sahara h2 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(2.3rem, 5.4vw, 4.2rem); line-height: 1.05; margin: 1rem 0 1.6rem;
+  }
+  .sahara h2 em { font-style: italic; color: var(--sand); }
+  .sahara p.big {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(1.15rem, 2vw, 1.5rem); line-height: 1.55; color: rgba(233,226,210,.85);
+    margin-bottom: 1.2rem;
+  }
+  .sahara p.small { font-size: .85rem; line-height: 1.7; color: rgba(233,226,210,.6); max-width: 44ch; }
+  .sahara-photo { position: relative; }
+  .sahara-photo img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+  .sahara-photo::before {
+    content: ""; position: absolute; inset: -14px; z-index: -1;
+    border: 1.5px dotted rgba(196,167,125,.4);
+  }
+  .sahara-photo figcaption {
+    font-family: var(--serif); font-style: italic; color: rgba(196,167,125,.75);
+    font-size: .9rem; padding-top: 12px;
+  }
+
+  /* ============ DETAILS + CTA ============ */
+  .cta-sec { background: linear-gradient(180deg, var(--night) 0%, #12100c 100%); color: #e9e2d2; padding: clamp(5rem, 12vh, 9rem) 0 clamp(6rem, 12vh, 9rem); }
+  .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; margin-top: 3rem; }
+  .includes { list-style: none; }
+  .includes li {
+    font-family: var(--serif); font-size: 1.1rem; padding: .85rem 0;
+    border-bottom: 1.5px dotted rgba(196,167,125,.3);
+    display: flex; gap: .9rem; align-items: baseline;
+  }
+  .includes li::before { content: "✳"; color: var(--red); font-size: .8rem; }
+  .cta-sec .sec-label { color: var(--sand); }
+  .cta-sec .sec-label::after { border-color: rgba(196,167,125,.35); }
+  .boarding {
+    background: #f6efdd; color: var(--ink);
+    border-radius: 10px; transform: rotate(-1.6deg);
+    box-shadow: 0 24px 60px rgba(0,0,0,.5);
+    position: relative; overflow: hidden;
+  }
+  .boarding::before, .boarding::after { /* perforation notches */
+    content: ""; position: absolute; width: 26px; height: 26px; border-radius: 50%;
+    background: #12100c; top: 64%;
+  }
+  .boarding::before { left: -13px; } .boarding::after { right: -13px; }
+  .b-top { padding: 1.6rem 1.8rem 1.2rem; }
+  .b-route {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--serif); font-weight: 600; font-size: 2rem;
+  }
+  .b-route .plane { color: var(--red); font-size: 1.1rem; letter-spacing: .3em; }
+  .b-cities { display: flex; justify-content: space-between; font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
+  .b-meta { display: flex; gap: 2rem; margin-top: 1.2rem; font-size: .72rem; }
+  .b-meta b { display: block; font-size: 9px; letter-spacing: .2em; color: var(--ink-soft); font-weight: 500; margin-bottom: 3px; text-transform: uppercase; }
+  .b-cut { border-top: 2px dashed rgba(74,59,42,.35); margin-top: 1.2rem; }
+  .b-bottom { padding: 1.1rem 1.8rem 1.4rem; display: flex; justify-content: space-between; align-items: center; }
+  .b-stamp {
+    border: 2.5px solid var(--red); color: var(--red); border-radius: 6px;
+    font-weight: 600; letter-spacing: .22em; font-size: .8rem; text-transform: uppercase;
+    padding: 10px 14px; transform: rotate(-5deg);
+    background: rgba(184,68,44,.05);
+  }
+  .b-barcode { font-family: "Courier New", monospace; letter-spacing: -1px; font-size: 1.6rem; opacity: .8; }
+  .cta-btn {
+    display: inline-block; margin-top: 2.2rem;
+    background: var(--red); color: #f6efdd; text-decoration: none;
+    font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
+    padding: 16px 34px; border-radius: 3px; transition: all .3s;
+  }
+  .cta-btn:hover { background: #99351f; transform: translateY(-2px); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: #000; color: rgba(255,255,255,.55);
+    padding: 3.4rem 0; font-size: .78rem; letter-spacing: .08em;
+  }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  footer .fmark { font-family: var(--serif); font-style: italic; font-size: 1.15rem; color: var(--sand); }
+  footer a { color: rgba(255,255,255,.8); text-decoration: none; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 800px) {
+    .pitch-grid, .sahara .wrap, .cta-grid { grid-template-columns: 1fr; }
+    .collage { height: 340px; }
+    .og-1 { grid-column: 1 / span 12; }
+    .og-2 { grid-column: 1 / span 12; margin-top: 0; }
+    .og-3 { grid-column: 1 / span 12; margin-top: 0; }
+    .pp-book { grid-template-columns: 1fr; min-height: 0; max-height: 76vh; overflow-y: auto; }
+    .pp-photo { min-height: 200px; }
+    .pp-photo img { position: relative; height: 200px; }
+    .m-sub, .m-geo { display: none; }
+    .boarding { transform: none; }
+  }
+</style>
+</head>
+<body class="grain">
+
+<!-- ================= 1. INVITATION HERO ================= -->
+<header class="hero">
+  <div class="halftone"></div>
+  <div class="hero-inner">
+    <div style="text-align:center">
+      <p class="hero-kicker">wanderquest × verci nyc — a private quest</p>
+      <h1 class="hero-dates">October 19 to<br/>October 26, 2026</h1>
+    </div>
+    <img class="hero-mark" src="images/brand/stone-mark.jpg" alt="Verci Tunisia — hand-carved calligraphy mark" />
+    <div class="hero-verci-line">
+      <span>VERCI</span><span class="in">in</span><span>Tunisia</span>
+    </div>
+  </div>
+  <div class="hero-photo"></div>
+  <span class="hero-scroll">Begin the journey ↓</span>
+</header>
+
+<!-- ================= 2. BILINGUAL MARQUEE ================= -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>Tunis</span><span class="ar">تونس</span><span class="dot">✳</span>
+    <span>Sidi Bou Saïd</span><span class="ar">سيدي بو سعيد</span><span class="dot">✳</span>
+    <span>Testour</span><span class="dot">✳</span>
+    <span>Dougga</span><span class="ar">دقة</span><span class="dot">✳</span>
+    <span>Cap Bon</span><span class="dot">✳</span>
+    <span>Tozeur</span><span class="ar">توزر</span><span class="dot">✳</span>
+    <span>Sahara</span><span class="ar">الصحراء</span><span class="dot">✳</span>
+    <span>Grand Erg Oriental</span><span class="dot">✳</span>
+  </div>
+</div>
+
+<!-- ================= 3. THE PITCH ================= -->
+<section class="pitch">
+  <div class="wrap">
+    <p class="sec-label reveal">The Nomadic Quest</p>
+    <h2 class="sec-title reveal">A country few travellers<br/><em>know in full.</em></h2>
+    <div class="pitch-grid">
+      <div class="pitch-copy reveal">
+        <p><span class="lead-in">Experience /</span> From the living medina of Tunis to the ancient Numidian city of Dougga and the Andalusian town of Testour, a full day on the Mediterranean aboard a catamaran, and deep into the south: the mountain oases, canyons and salt lakes of Tozeur — converging on a night under the stars in the Sahara desert.</p>
+        <p>Mediterranean light, desert silence, and centuries of layered civilisation coexist, sometimes within hours of each other. Travelling through them is less a visit than a rereading. <em>Curiosity is the compass.</em></p>
+        <dl class="facts">
+          <div><dt>Best time to travel</dt><dd>October</dd></div>
+          <div><dt>Dates</dt><dd>October 19 – 26, 2026</dd></div>
+          <div><dt>Duration</dt><dd>7 days / 6 nights</dd></div>
+          <div><dt>Questers</dt><dd>~30, exclusive use</dd></div>
+          <div><dt>Route</dt><dd>Tunis → Testour → Dougga → Cap Bon → Tozeur → Desert → Tunis</dd></div>
+        </dl>
+      </div>
+      <div class="collage reveal">
+        <figure class="c1"><img src="images/tunisia-034.jpg" alt="Sidi Bou Saïd"/><figcaption>Sidi Bou Saïd, above the Gulf of Tunis</figcaption></figure>
+        <figure class="c2"><img src="images/tunisia-010.jpg" alt="Workshop"/><figcaption>Dar El Sanaa, the workshops</figcaption></figure>
+        <figure class="c3"><img src="images/tunisia-024.jpg" alt="Dougga"/><figcaption>Dougga, Thugga in Latin</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. THE ROUTE — MAP ================= -->
+<section class="route" id="route">
+  <div class="wrap">
+    <p class="sec-label reveal">Suggested Itinerary</p>
+    <h2 class="sec-title reveal">The <em>route.</em></h2>
+    <div class="route-frame reveal">
+      <div class="cartouche">
+        <h3>TUNISIE</h3>
+        <p>carnet de route · oct. 2026</p>
+      </div>
+      <p class="map-hint">Click a stop — or the passport itself</p>
+      <button class="passport-obj" id="passportObj" aria-label="Open the itinerary passport">
+        <span class="passport-tag">Your travel document</span>
+        <img src="images/tunisia-passport-clean.png" alt="Republic of Tunisia passport"/>
+      </button>
+
+      <svg viewBox="0 0 620 820" role="img" aria-label="Illustrated map of Tunisia with the seven-day route">
+        <defs>
+          <filter id="rough">
+            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="5"/>
+          </filter>
+          <filter id="rough2">
+            <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="3"/>
+          </filter>
+        </defs>
+
+        <!-- sea waves -->
+        <g filter="url(#rough2)" stroke="#8aa3b2" stroke-width="1.1" fill="none" opacity=".5">
+          <path d="M 430 20 q 14 -7 28 0 q 14 7 28 0"/>
+          <path d="M 500 60 q 14 -7 28 0 q 14 7 28 0"/>
+          <path d="M 480 130 q 14 -7 28 0 q 14 7 28 0"/>
+          <path d="M 520 210 q 14 -7 28 0 q 14 7 28 0"/>
+          <path d="M 510 320 q 14 -7 28 0 q 14 7 28 0"/>
+          <path d="M 540 430 q 14 -7 28 0 q 14 7 28 0"/>
+          <path d="M 150 15 q 14 -7 28 0 q 14 7 28 0"/>
+          <path d="M 60 40 q 14 -7 28 0 q 14 7 28 0"/>
+        </g>
+        <text class="m-sea" x="455" y="255" transform="rotate(62 455 255)">MER MÉDITERRANÉE</text>
+
+        <!-- landmass -->
+        <g filter="url(#rough)">
+          <path d="M 186 58
+                   C 230 38, 290 20, 322 26
+                   C 344 30, 352 48, 344 62
+                   C 358 56, 372 62, 372 78
+                   C 380 70, 398 64, 414 62
+                   C 434 58, 452 48, 462 44
+                   C 472 42, 476 50, 470 58
+                   C 460 74, 442 92, 424 100
+                   C 416 106, 410 112, 408 120
+                   C 412 138, 414 158, 412 176
+                   C 418 190, 440 198, 458 210
+                   C 466 226, 452 250, 438 268
+                   C 432 282, 430 288, 427 292
+                   C 408 310, 380 330, 362 352
+                   C 352 366, 346 376, 348 384
+                   C 362 388, 386 386, 402 392
+                   C 420 400, 442 412, 462 422
+                   C 470 440, 464 470, 458 500
+                   C 452 540, 450 590, 448 640
+                   C 447 680, 446 725, 444 758
+                   C 420 730, 380 690, 340 655
+                   C 300 620, 262 592, 240 570
+                   C 220 548, 200 510, 184 470
+                   C 170 434, 150 400, 118 384
+                   C 88 370, 60 352, 50 336
+                   C 46 300, 58 250, 72 210
+                   C 84 172, 100 132, 120 104
+                   C 138 80, 162 66, 186 58 Z"
+                fill="#ece1c6" stroke="#4a3b2a" stroke-width="2.2"/>
+          <!-- Djerba -->
+          <path d="M 470 430 q 20 -8 34 4 q 8 12 -6 20 q -20 8 -32 -4 q -6 -12 4 -20 Z"
+                fill="#ece1c6" stroke="#4a3b2a" stroke-width="1.8"/>
+        </g>
+
+        <!-- chott el jerid -->
+        <g filter="url(#rough2)">
+          <ellipse cx="172" cy="408" rx="62" ry="20" fill="none" stroke="#9b8a6d" stroke-width="1.4" stroke-dasharray="5 4"/>
+          <g stroke="#9b8a6d" stroke-width="1" opacity=".7">
+            <line x1="140" y1="404" x2="152" y2="404"/><line x1="162" y1="412" x2="176" y2="412"/>
+            <line x1="186" y1="403" x2="200" y2="403"/><line x1="152" y1="418" x2="140" y2="418"/>
+          </g>
+          <text class="m-geo" x="132" y="443">Chott el Jerid</text>
+        </g>
+
+        <!-- dune hatching, deep south -->
+        <g filter="url(#rough2)" stroke="#b09a76" stroke-width="1.3" fill="none" opacity=".75">
+          <path d="M 250 585 q 12 -10 24 0"/> <path d="M 290 610 q 12 -10 24 0"/>
+          <path d="M 330 640 q 12 -10 24 0"/> <path d="M 265 640 q 12 -10 24 0"/>
+          <path d="M 310 675 q 12 -10 24 0"/> <path d="M 360 660 q 12 -10 24 0"/>
+          <path d="M 350 700 q 12 -10 24 0"/> <path d="M 395 690 q 12 -10 24 0"/>
+          <path d="M 300 570 q 12 -10 24 0"/>
+        </g>
+        <text class="m-geo" x="290" y="730">Grand Erg Oriental</text>
+
+        <!-- context cities -->
+        <g fill="#7a6a52">
+          <circle cx="320" cy="34" r="2.5"/><text class="m-geo" x="328" y="38">Bizerte</text>
+          <circle cx="424" cy="290" r="2.5"/><text class="m-geo" x="398" y="304">Sfax</text>
+          <text class="m-geo" x="470" y="465">Djerba</text>
+        </g>
+
+        <!-- outbound route -->
+        <path class="route-path" filter="url(#rough2)"
+          d="M 382 64 C 372 74, 362 76, 352 80
+             C 316 92, 276 100, 252 112
+             C 268 100, 320 78, 360 72
+             C 396 66, 428 54, 452 50
+             C 448 74, 436 96, 420 116
+             C 396 150, 350 200, 310 250
+             C 270 300, 200 340, 138 380
+             C 150 400, 180 440, 210 480
+             C 228 504, 244 520, 254 528"/>
+        <!-- return route (lighter) -->
+        <path class="route-path route-return" filter="url(#rough2)"
+          d="M 262 524 C 300 480, 330 420, 344 360
+             C 358 300, 366 200, 368 120
+             C 369 100, 370 84, 371 76"/>
+
+        <!-- ============ STOPS ============ -->
+        <!-- helper: marker = red stamped ring + number -->
+
+        <!-- D1 Sidi Bou Saïd -->
+        <g class="stop" data-day="0" tabindex="0">
+          <g class="illus" filter="url(#rough2)" transform="translate(390,26)">
+            <!-- blue door -->
+            <path d="M 0 22 L 0 8 Q 7 -2 14 8 L 14 22 Z" fill="#2456a4" stroke="#1a3f7d" stroke-width="1"/>
+            <circle cx="7" cy="14" r="1.2" fill="#f0e7d3"/>
+          </g>
+          <g class="ring">
+            <circle cx="382" cy="64" r="11" fill="var(--paper)" stroke="#b8442c" stroke-width="2" stroke-dasharray="2.5 2.5"/>
+            <text x="382" y="68" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#b8442c">1</text>
+          </g>
+          <g class="tag"><text class="m-label" x="404" y="60">DAY 01</text><text class="m-sub" x="404" y="75">Sidi Bou Saïd</text></g>
+        </g>
+
+        <!-- D2 Medina of Tunis -->
+        <g class="stop" data-day="1" tabindex="0">
+          <g class="illus" filter="url(#rough2)" transform="translate(322,44)">
+            <!-- minaret + arch -->
+            <rect x="0" y="6" width="7" height="18" fill="none" stroke="#4a3b2a" stroke-width="1.3"/>
+            <path d="M -1 6 L 8.5 6 L 3.5 0 Z" fill="#4a3b2a"/>
+            <path d="M 11 24 L 11 16 Q 15 10 19 16 L 19 24" fill="none" stroke="#4a3b2a" stroke-width="1.3"/>
+          </g>
+          <g class="ring">
+            <circle cx="352" cy="80" r="11" fill="var(--paper)" stroke="#b8442c" stroke-width="2" stroke-dasharray="2.5 2.5"/>
+            <text x="352" y="84" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#b8442c">2</text>
+          </g>
+          <g class="tag"><text class="m-label" x="296" y="66" text-anchor="end">DAY 02</text><text class="m-sub" x="296" y="81" text-anchor="end">Medina of Tunis</text></g>
+        </g>
+
+        <!-- D3 Testour & Dougga -->
+        <g class="stop" data-day="2" tabindex="0">
+          <g class="illus" filter="url(#rough2)" transform="translate(222,120)">
+            <!-- roman columns -->
+            <g stroke="#4a3b2a" stroke-width="1.3" fill="none">
+              <line x1="2" y1="4" x2="2" y2="18"/><line x1="9" y1="4" x2="9" y2="18"/><line x1="16" y1="4" x2="16" y2="18"/>
+              <line x1="-1" y1="3" x2="19" y2="3"/><line x1="0" y1="0" x2="18" y2="0"/>
+              <line x1="-1" y1="19" x2="19" y2="19"/>
+            </g>
+          </g>
+          <g class="ring">
+            <circle cx="252" cy="112" r="11" fill="var(--paper)" stroke="#b8442c" stroke-width="2" stroke-dasharray="2.5 2.5"/>
+            <text x="252" y="116" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#b8442c">3</text>
+          </g>
+          <g class="tag"><text class="m-label" x="196" y="98" text-anchor="end">DAY 03</text><text class="m-sub" x="196" y="113" text-anchor="end">Testour &amp; Dougga</text></g>
+        </g>
+
+        <!-- D4 Cap Bon -->
+        <g class="stop" data-day="3" tabindex="0">
+          <g class="illus" filter="url(#rough2)" transform="translate(478,18)">
+            <!-- catamaran -->
+            <path d="M 0 16 L 22 16 L 18 21 L 4 21 Z" fill="none" stroke="#4a3b2a" stroke-width="1.3"/>
+            <path d="M 11 15 L 11 0 L 20 13 Z" fill="#4a3b2a" opacity=".85"/>
+          </g>
+          <g class="ring">
+            <circle cx="452" cy="50" r="11" fill="var(--paper)" stroke="#b8442c" stroke-width="2" stroke-dasharray="2.5 2.5"/>
+            <text x="452" y="54" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#b8442c">4</text>
+          </g>
+          <g class="tag"><text class="m-label" x="470" y="78">DAY 04</text><text class="m-sub" x="470" y="93">Cap Bon</text></g>
+        </g>
+
+        <!-- D5 Tozeur -->
+        <g class="stop" data-day="4" tabindex="0">
+          <g class="illus" filter="url(#rough2)" transform="translate(96,330)">
+            <!-- palm -->
+            <path d="M 12 24 Q 11 12 12 6" fill="none" stroke="#4a3b2a" stroke-width="1.4"/>
+            <path d="M 12 7 Q 4 2 -2 6 M 12 7 Q 10 -2 4 -3 M 12 7 Q 15 -3 22 -2 M 12 7 Q 20 3 26 8" fill="none" stroke="#4a3b2a" stroke-width="1.2"/>
+          </g>
+          <g class="ring">
+            <circle cx="138" cy="380" r="11" fill="var(--paper)" stroke="#b8442c" stroke-width="2" stroke-dasharray="2.5 2.5"/>
+            <text x="138" y="384" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#b8442c">5</text>
+          </g>
+          <g class="tag"><text class="m-label" x="122" y="366" text-anchor="end">DAY 05</text><text class="m-sub" x="122" y="381" text-anchor="end">Tozeur</text></g>
+        </g>
+
+        <!-- D6 Sahara -->
+        <g class="stop" data-day="5" tabindex="0">
+          <g class="illus" filter="url(#rough2)" transform="translate(272,540)">
+            <!-- camel + moon -->
+            <path d="M 0 14 Q 5 6 10 12 Q 14 5 19 12 L 21 8 L 23 8 L 22 14 Z" fill="#4a3b2a"/>
+            <path d="M 3 14 L 3 19 M 8 14 L 8 19 M 15 14 L 15 19 M 20 14 L 20 19" stroke="#4a3b2a" stroke-width="1.1"/>
+            <path d="M 32 2 A 6 6 0 1 0 36 10 A 4.6 4.6 0 1 1 32 2 Z" fill="#4a3b2a" opacity=".8"/>
+          </g>
+          <g class="ring">
+            <circle cx="254" cy="528" r="11" fill="var(--paper)" stroke="#b8442c" stroke-width="2" stroke-dasharray="2.5 2.5"/>
+            <text x="254" y="532" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#b8442c">6</text>
+          </g>
+          <g class="tag"><text class="m-label" x="216" y="516" text-anchor="end">DAY 06</text><text class="m-sub" x="216" y="531" text-anchor="end">Sahara Desert</text></g>
+        </g>
+
+        <!-- D7 Back to Tunis -->
+        <g class="stop" data-day="6" tabindex="0">
+          <g class="illus" filter="url(#rough2)" transform="translate(384,96)">
+            <!-- plane -->
+            <path d="M 0 10 L 20 6 L 14 0 L 17 0 L 26 5 L 34 4 Q 37 5 34 7 L 26 8 L 17 13 L 14 13 L 18 8 Z" fill="#4a3b2a" opacity=".85"/>
+          </g>
+          <g class="ring">
+            <circle cx="371" cy="92" r="9" fill="var(--paper)" stroke="#7a6a52" stroke-width="1.8" stroke-dasharray="2.5 2.5"/>
+            <text x="371" y="96" text-anchor="middle" font-family="Inter" font-size="9" font-weight="600" fill="#7a6a52">7</text>
+          </g>
+          <g class="tag"><text class="m-label" x="412" y="112">DAY 07</text><text class="m-sub" x="412" y="127">Back to Tunis</text></g>
+        </g>
+
+        <!-- compass -->
+        <g filter="url(#rough2)" transform="translate(64,620)">
+          <circle r="26" fill="none" stroke="#4a3b2a" stroke-width="1.3"/>
+          <path d="M 0 -22 L 5 6 L 0 0 L -5 6 Z" fill="#b8442c"/>
+          <text x="0" y="-32" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="15" fill="#4a3b2a">N</text>
+        </g>
+        <!-- scale -->
+        <g transform="translate(46,700)" stroke="#4a3b2a" stroke-width="1.2">
+          <line x1="0" y1="0" x2="90" y2="0"/><line x1="0" y1="-4" x2="0" y2="4"/><line x1="45" y1="-3" x2="45" y2="3"/><line x1="90" y1="-4" x2="90" y2="4"/>
+          <text x="45" y="17" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="12" fill="#4a3b2a" stroke="none">100 km</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. PASSPORT OVERLAY ================= -->
+<div class="pp-scrim" id="ppScrim"></div>
+<div class="pp-sheet" id="ppSheet" role="dialog" aria-modal="true" aria-label="Itinerary passport">
+  <button class="pp-close" id="ppClose">✕ &nbsp;Close passport</button>
+  <div class="pp-book">
+    <div class="pp-photo">
+      <img id="ppImg" src="images/tunisia-034.jpg" alt=""/>
+      <span class="pp-stamp" id="ppStamp">TUNIS-CARTHAGE</span>
+    </div>
+    <div class="pp-info">
+      <p class="pp-day" id="ppDay">Day 01 · 19 Oct 2026</p>
+      <h3 class="pp-title" id="ppTitle">Sidi Bou Saïd</h3>
+      <p class="pp-sub" id="ppSub">Arrival</p>
+      <p class="pp-desc" id="ppDesc"></p>
+      <p class="pp-mrz" id="ppMrz">P&lt;TUNVERCI&lt;&lt;QUEST&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;TUN2026101900&lt;&lt;&lt;01</p>
+    </div>
+  </div>
+  <div class="pp-nav">
+    <button id="ppPrev">← Prev</button>
+    <div class="pp-days" id="ppDays"></div>
+    <button id="ppNext">Next →</button>
+  </div>
+</div>
+
+<!-- ================= 6. POSTCARDS ================= -->
+<section class="postcards">
+  <div class="wrap">
+    <p class="sec-label reveal">Field Notes</p>
+    <h2 class="sec-title reveal">Postcards from<br/><em>the quest.</em></h2>
+  </div>
+  <div class="pc-row">
+    <div class="postcard"><img src="images/tunisia-004.jpg" alt="Medina"/><div class="pc-meta"><span class="pc-title">The living medina</span><span class="pc-no">№ 01</span></div></div>
+    <div class="postcard"><img src="images/tunisia-012.jpg" alt="Workshops"/><div class="pc-meta"><span class="pc-title">Hands of the masters</span><span class="pc-no">№ 02</span></div></div>
+    <div class="postcard"><img src="images/tunisia-026.jpg" alt="Dougga"/><div class="pc-meta"><span class="pc-title">Rome, undisturbed</span><span class="pc-no">№ 03</span></div></div>
+    <div class="postcard"><img src="images/tunisia-030.jpg" alt="Catamaran"/><div class="pc-meta"><span class="pc-title">Reading the wind</span><span class="pc-no">№ 04</span></div></div>
+    <div class="postcard"><img src="images/tunisia-048.jpg" alt="Chebika"/><div class="pc-meta"><span class="pc-title">Water in the mountains</span><span class="pc-no">№ 05</span></div></div>
+    <div class="postcard"><img src="images/tunisia-082.jpg" alt="Dunes"/><div class="pc-meta"><span class="pc-title">The sand sea</span><span class="pc-no">№ 06</span></div></div>
+  </div>
+</section>
+
+<!-- ================= 7. HEADING SOUTH ================= -->
+<section class="south">
+  <div class="wrap">
+    <p class="south-kicker reveal">Day 05 — seven hours south</p>
+    <h2 class="reveal">The coast falls away,<br/>and the light changes.</h2>
+    <div class="south-line reveal">
+      <i style="left:0%"></i><span style="left:0%">coast</span>
+      <i style="left:33%"></i><span style="left:33%">steppe</span>
+      <i style="left:66%"></i><span style="left:66%">first palms</span>
+      <i style="left:100%"></i><span style="left:100%">dunes</span>
+    </div>
+    <p class="south-note reveal">TUNIS → TAMERZA → CHEBIKA → MIDES → TOZEUR</p>
+  </div>
+</section>
+
+<!-- ================= 8. OASES ================= -->
+<section class="oases">
+  <div class="brick-divider" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="sec-label reveal">Tozeur &amp; the mountain oases</p>
+    <h2 class="sec-title reveal" style="color:#efe3c8">Where water, brick<br/>and desert <em style="color:var(--terracotta)">coexist.</em></h2>
+    <div class="oases-grid">
+      <figure class="oasis-card reveal og-1"><img src="images/tunisia-046.jpg" alt="Tozeur palm grove"/><figcaption><span>The palmeraie — 400,000 date palms</span><b>OASIS</b></figcaption></figure>
+      <figure class="oasis-card reveal og-2"><img src="images/tunisia-048.jpg" alt="Chebika"/><figcaption><span>Chebika, springs above the desert</span><b>SPRING</b></figcaption></figure>
+      <figure class="oasis-card reveal og-3"><img src="images/tunisia-050.jpg" alt="Mides"/><figcaption><span>Mides, a canyon carved in rock</span><b>CANYON</b></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9. SAHARA NIGHT ================= -->
+<section class="sahara">
+  <div class="stars" id="stars"></div>
+  <div class="wrap">
+    <div class="reveal">
+      <p class="sec-label">Day 06 — a night with the nomads</p>
+      <h2>No network.<br/>No noise.<br/><em>No reference points.</em></h2>
+      <p class="big">The road narrows, and then disappears. The Grand Erg Oriental begins — one of the two great sand seas of the Sahara.</p>
+      <p class="small">Dinner prepared on-site around a fire. The night spent under the stars: tents, bedrolls, blankets, open sky. No electricity. No schedule. Just the silence that surprises, and the kind of darkness that makes the stars look different.</p>
+    </div>
+    <figure class="sahara-photo reveal">
+      <img src="images/tunisia-086.jpg" alt="Desert camp at night"/>
+      <figcaption>Grand Erg Oriental — dinner around the fire</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= 10. DETAILS + BOARDING PASS CTA ================= -->
+<section class="cta-sec">
+  <div class="wrap">
+    <p class="sec-label reveal">Join the quest</p>
+    <h2 class="sec-title reveal" style="color:#e9e2d2">Your seat on<br/>the <em style="color:var(--sand)">caravan.</em></h2>
+    <div class="cta-grid">
+      <div class="reveal">
+        <ul class="includes">
+          <li>Private accommodation in heritage properties</li>
+          <li>All transfers &amp; a private catamaran day</li>
+          <li>Master-led artisan workshops in the medina</li>
+          <li>Guided walks — Medina, Testour, Dougga</li>
+          <li>A night with nomadic hosts in the Sahara</li>
+          <li>All meals, from Dar Zarrouk to the campfire</li>
+        </ul>
+        <a class="cta-btn" href="mailto:ami@verci.com">Request an invitation</a>
+      </div>
+      <div class="boarding reveal">
+        <div class="b-top">
+          <div class="b-route"><span>NYC</span><span class="plane">·····✈·····</span><span>TUN</span></div>
+          <div class="b-cities"><span>New York</span><span>Tunis-Carthage</span></div>
+          <div class="b-meta">
+            <div><b>Passenger</b>QUESTER / VERCI</div>
+            <div><b>Date</b>19 OCT 2026</div>
+            <div><b>Seats</b>~30</div>
+            <div><b>Class</b>EXCLUSIVE</div>
+          </div>
+          <div class="b-cut"></div>
+        </div>
+        <div class="b-bottom">
+          <span class="b-stamp">Join the Quest</span>
+          <span class="b-barcode">▮I015IL▮I0▮LI▮1▮0IIL▮</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 11. FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <span class="fmark">Verci in Tunisia</span>
+    <span>wanderquest × VERCI NYC — a private quest · October 2026</span>
+    <a href="mailto:ami@verci.com">ami@verci.com</a>
+  </div>
+</footer>
+
+<script>
+  /* ---------- data (PDF V3 itinerary) ---------- */
+  const DAYS = [
+    { title:"Sidi Bou Saïd", sub:"Arrival", date:"19 Oct 2026", stamp:"TUNIS-CARTHAGE",
+      desc:"Arrival at Tunis-Carthage and check-in above the Gulf of Tunis. White walls, blue doors, bougainvillea, and a quality of light that has drawn artists here for over a century. First unstructured walk — no agenda. Welcome dinner at Dar Zarrouk.",
+      img:"images/tunisia-034.jpg" },
+    { title:"Medina of Tunis", sub:"The living city", date:"20 Oct 2026", stamp:"MEDINA · UNESCO",
+      desc:"A guided walk through quarters few visitors reach — working ateliers, inner courtyards, artist residencies. Then Dar El Sanaa for the workshops: dinanderie, Arabic calligraphy, embroidery, wood sculpture, mosaic. Dinner in La Goulette.",
+      img:"images/tunisia-004.jpg" },
+    { title:"Testour & Dougga", sub:"Andalusia & Rome", date:"21 Oct 2026", stamp:"THVGGA",
+      desc:"Testour, settled by Moriscos expelled from Spain — the Great Mosque, the malouf tradition. Then Dougga, the best-preserved Africo-Roman city in North Africa: never abruptly abandoned, never looted. The layers accumulate with rare continuity.",
+      img:"images/tunisia-024.jpg" },
+    { title:"Cap Bon", sub:"A day at sea", date:"22 Oct 2026", stamp:"KORBOUS · MED",
+      desc:"A full day aboard a catamaran from Sidi Bou Saïd to Korbous — the coast seen from the sea, which is the only way to see it properly. Hidden coves, snorkelling, stand-up paddle, and long stretches of doing nothing in particular.",
+      img:"images/tunisia-030.jpg" },
+    { title:"Tozeur", sub:"Seven hours south", date:"23 Oct 2026", stamp:"TOZEUR · OASIS",
+      desc:"Coast to steppe to the first palm groves. The mountain oases of Chebika and Mides — springs, waterfalls, deep canyons. Night in the palmeraie among 400,000 date palms at Diar Abou Habibi.",
+      img:"images/tunisia-046.jpg" },
+    { title:"Sahara Desert", sub:"A night with the nomads", date:"24 Oct 2026", stamp:"GRAND ERG",
+      desc:"The road narrows, then disappears. Afternoon at the rhythm of the dunes — on foot, by camel, or watching the light shift. Dinner around a fire. Night under the open sky: no electricity, no schedule, just silence and stars.",
+      img:"images/tunisia-076.jpg" },
+    { title:"Back to Tunis", sub:"Farewell Tunisia", date:"25 Oct 2026", stamp:"EXIT · TUN",
+      desc:"Sunrise in the desert, breakfast at camp. The long road north with a stop for a last meal together. Departures from Tunis-Carthage — the quest ends where it began, but nothing looks the same.",
+      img:"images/tunisia-084.jpg" },
+  ];
+
+  /* ---------- passport overlay ---------- */
+  const sheet = document.getElementById("ppSheet");
+  const scrim = document.getElementById("ppScrim");
+  const daysBar = document.getElementById("ppDays");
+  let current = 0;
+
+  DAYS.forEach((d, i) => {
+    const b = document.createElement("button");
+    b.textContent = String(i + 1).padStart(2, "0");
+    b.addEventListener("click", () => render(i));
+    daysBar.appendChild(b);
+  });
+
+  function render(i) {
+    current = (i + DAYS.length) % DAYS.length;
+    const d = DAYS[current];
+    document.getElementById("ppImg").src = d.img;
+    document.getElementById("ppStamp").textContent = d.stamp;
+    document.getElementById("ppDay").textContent = `Day 0${current + 1} · ${d.date}`;
+    document.getElementById("ppTitle").textContent = d.title;
+    document.getElementById("ppSub").textContent = d.sub;
+    document.getElementById("ppDesc").textContent = d.desc;
+    document.getElementById("ppMrz").textContent =
+      `P<TUNVERCI<<QUEST<<<<<<<<<TUN20261${(19 + current)}00<<<0${current + 1}`;
+    [...daysBar.children].forEach((b, j) => b.classList.toggle("on", j === current));
+  }
+
+  function openPassport(i) {
+    render(i);
+    sheet.classList.add("open");
+    scrim.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closePassport() {
+    sheet.classList.remove("open");
+    scrim.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll(".stop").forEach(s => {
+    const open = () => openPassport(Number(s.dataset.day));
+    s.addEventListener("click", open);
+    s.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+  });
+  document.getElementById("passportObj").addEventListener("click", () => openPassport(0));
+  document.getElementById("ppClose").addEventListener("click", closePassport);
+  scrim.addEventListener("click", closePassport);
+  document.getElementById("ppPrev").addEventListener("click", () => render(current - 1));
+  document.getElementById("ppNext").addEventListener("click", () => render(current + 1));
+  document.addEventListener("keydown", e => {
+    if (!sheet.classList.contains("open")) return;
+    if (e.key === "Escape") closePassport();
+    if (e.key === "ArrowLeft") render(current - 1);
+    if (e.key === "ArrowRight") render(current + 1);
+  });
+
+  /* ---------- marquee duplication ---------- */
+  const track = document.getElementById("marqueeTrack");
+  track.innerHTML += track.innerHTML;
+
+  /* ---------- scroll reveals ---------- */
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => e.isIntersecting && e.target.classList.add("vis")),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  /* ---------- stars ---------- */
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 90; i++) {
+    const s = document.createElement("i");
+    s.style.left = Math.random() * 100 + "%";
+    s.style.top = Math.random() * 70 + "%";
+    s.style.animationDelay = (Math.random() * 3.4).toFixed(2) + "s";
+    s.style.transform = `scale(${(Math.random() * 1.1 + 0.4).toFixed(2)})`;
+    stars.appendChild(s);
+  }
+</script>
+</body>
+</html>

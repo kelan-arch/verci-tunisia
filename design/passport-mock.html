@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tunisia Passport Mock</title>
+<style>
+  body {
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: system-ui;
+  }
+
+  .passport {
+    width: 280px;
+    height: 400px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    /* Dark green — Tunisian passport color */
+    background: linear-gradient(160deg, #1a4a2e 0%, #0f3520 40%, #0a2a18 100%);
+    box-shadow:
+      0 30px 60px rgba(0,0,0,0.5),
+      3px 0 6px rgba(0,0,0,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+
+  /* Leather texture */
+  .passport::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  /* Spine shadow left */
+  .passport::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 6px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.3), transparent);
+  }
+
+  /* Page edges visible on right */
+  .page-edges {
+    position: absolute;
+    top: 16px; bottom: 16px; right: 3px;
+    width: 3px;
+    background: linear-gradient(90deg, rgba(230,225,215,0.3), rgba(230,225,215,0.12));
+    border-radius: 1px;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  /* Gold color for all text */
+  .gold { color: #c9a84c; }
+  .gold-dim { color: rgba(201, 168, 76, 0.5); }
+  .gold-dimmer { color: rgba(201, 168, 76, 0.3); }
+
+  /* Top — country name trilingual */
+  .country-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .country-name .arabic {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #c9a84c;
+    direction: rtl;
+  }
+  .country-name .french {
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #c9a84c;
+  }
+  .country-name .english {
+    font-size: 6px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.45);
+  }
+
+  /* Center — emblem */
+  .emblem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .coat-of-arms {
+    width: 90px;
+    height: 90px;
+    border: 1.5px solid rgba(201, 168, 76, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .coat-of-arms .inner {
+    width: 74px;
+    height: 74px;
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+  /* Crescent and star — iconic Tunisian symbol */
+  .crescent-star {
+    position: relative;
+    width: 30px;
+    height: 30px;
+  }
+  .crescent {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 2px solid #c9a84c;
+    border-radius: 50%;
+    top: 2px;
+    left: 0;
+  }
+  .crescent-mask {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(160deg, #1a4a2e, #0f3520);
+    border-radius: 50%;
+    top: 2px;
+    left: 6px;
+  }
+  .star {
+    position: absolute;
+    color: #c9a84c;
+    font-size: 12px;
+    top: 8px;
+    left: 3px;
+  }
+
+  .shield-text {
+    font-size: 5px;
+    letter-spacing: 0.15em;
+    color: rgba(201, 168, 76, 0.3);
+    text-transform: uppercase;
+  }
+
+  /* Bottom — passport title trilingual */
+  .passport-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .passport-title .arabic {
+    font-size: 16px;
+    font-weight: 600;
+    color: #c9a84c;
+    direction: rtl;
+  }
+  .passport-title .french {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #c9a84c;
+  }
+  .passport-title .english {
+    font-size: 7px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.4);
+  }
+
+  /* Subtitle */
+  .subtitle {
+    font-size: 5px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.2);
+    margin-top: 8px;
+  }
+
+  .label {
+    color: #999;
+    font-size: 12px;
+    margin-top: 30px;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<div style="display: flex; gap: 60px; align-items: start;">
+
+  <!-- TUNISIAN PASSPORT -->
+  <div style="text-align: center;">
+    <div class="passport">
+      <div class="page-edges"></div>
+      <div class="content">
+
+        <!-- Top: Country Name -->
+        <div class="country-name">
+          <span class="arabic">الجمهورية التونسية</span>
+          <span class="french">République Tunisienne</span>
+          <span class="english">Republic of Tunisia</span>
+        </div>
+
+        <!-- Center: Emblem -->
+        <div class="emblem">
+          <div class="coat-of-arms">
+            <div class="inner">
+              <div class="crescent-star">
+                <div class="crescent"></div>
+                <div class="crescent-mask"></div>
+                <div class="star">★</div>
+              </div>
+              <span class="shield-text">ordre • liberté • justice</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom: Passport Title -->
+        <div class="passport-title">
+          <span class="arabic">جواز سفر</span>
+          <span class="french">Passeport</span>
+          <span class="english">Passport</span>
+        </div>
+
+        <span class="subtitle">wanderquest × verci · oct 2026</span>
+      </div>
+    </div>
+    <p class="label">Tunisian Passport Style</p>
+  </div>
+
+  <!-- CURRENT NAVY VERSION FOR COMPARISON -->
+  <div style="text-align: center;">
+    <div class="passport" style="background: linear-gradient(160deg, #1a2744 0%, #0f1b33 40%, #0a1428 100%);">
+      <div class="page-edges"></div>
+      <div class="content">
+        <span style="font-size: 6px; font-weight: 600; letter-spacing: 0.5em; text-transform: uppercase; color: #b8974a;">Verci × WanderQuest</span>
+
+        <div class="emblem">
+          <div class="coat-of-arms" style="border-color: rgba(184,151,74,0.3);">
+            <div class="inner" style="border-color: rgba(184,151,74,0.15);">
+              <span style="color: #b8974a; font-size: 24px;">★</span>
+            </div>
+          </div>
+          <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #b8974a;">Passport</span>
+          <span style="font-size: 6px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(184,151,74,0.4);">Tunisia • Oct 2026</span>
+        </div>
+
+        <span style="font-size: 5px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(184,151,74,0.2);">Click to open</span>
+      </div>
+    </div>
+    <p class="label">Current (Navy)</p>
+  </div>
+
+</div>
+
+</body>
+</html>

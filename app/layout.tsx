@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Cormorant_Garamond, Inter, Amiri } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -14,15 +16,22 @@ const inter = Inter({
   display: "swap",
 });
 
+const amiri = Amiri({
+  variable: "--font-amiri",
+  subsets: ["arabic"],
+  weight: ["400"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Verci x WanderQuest — Tunisia, October 2026",
+  title: "Verci in Tunisia — wanderquest × VERCI NYC, October 2026",
   description:
     "A 7-day private quest across Tunisia. From the medinas of Tunis to the Sahara Desert. October 19–26, 2026.",
   openGraph: {
-    title: "Verci x WanderQuest — Tunisia",
+    title: "Verci in Tunisia",
     description:
       "A slow immersion into a country that few travellers know in full. October 19–26, 2026.",
-    images: ["/images/tunisia-002.jpg"],
+    images: ["/images/brand/poster.jpg"],
   },
 };
 
@@ -34,9 +43,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable} antialiased`}
+      className={`${cormorant.variable} ${inter.variable} ${amiri.variable} antialiased`}
     >
-      <body className="bg-black text-white">{children}</body>
+      <body className="bg-paper text-ink">{children}</body>
     </html>
   );
 }
