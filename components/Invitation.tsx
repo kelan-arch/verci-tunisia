@@ -64,11 +64,12 @@ export default function Invitation() {
   // checkbox fires a native haptic tick. Undocumented, may break.
   const touchCharging = useRef(false);
   const lastHaptic = useRef(0);
-  const switchRef = useRef<HTMLInputElement>(null);
+  const switchRef = useRef<HTMLLabelElement>(null);
   const hapticTick = (strength: number) => {
     if ("vibrate" in navigator && typeof navigator.vibrate === "function") {
       navigator.vibrate(Math.round(8 + 32 * strength));
     } else {
+      // Clicking the label (not the input) is what fires the haptic on iOS
       switchRef.current?.click();
     }
   };
@@ -443,16 +444,23 @@ export default function Invitation() {
       </motion.span>
 
       {/* iOS haptic hack: Safari 17.4+ fires a native haptic tick when a
-          switch-style checkbox toggles — even programmatically. Hidden
-          visually (not display:none, which suppresses the haptic). */}
-      <input
+          switch-style checkbox toggles via its label. Hidden with opacity
+          only — display:none / clip-based hiding suppresses the haptic. */}
+      <label
         ref={switchRef}
-        type="checkbox"
-        tabIndex={-1}
         aria-hidden="true"
-        className="sr-only"
-        {...{ switch: "" }}
-      />
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: 1,
+          height: 1,
+          opacity: 0,
+          pointerEvents: "none",
+        }}
+      >
+        <input type="checkbox" tabIndex={-1} {...{ switch: "" }} />
+      </label>
 
       {/* Cinema — the site dims and the film reveals itself.
           Swap the placeholder <div> for a <video> when the film is ready. */}
