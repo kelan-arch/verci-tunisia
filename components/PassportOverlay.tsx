@@ -139,16 +139,20 @@ export default function PassportOverlay({
             onClick={onClose}
             className="fixed inset-0 z-[200] bg-[rgba(13,17,23,0.55)] backdrop-blur-[3px]"
           />
-          <motion.div
+          <div
             key="sheet"
-            initial={{ y: "110%", x: "-50%" }}
-            animate={{ y: 0, x: "-50%" }}
-            exit={{ y: "110%", x: "-50%" }}
+            className="pointer-events-none fixed inset-0 z-[201] flex items-center justify-center"
+          >
+          <motion.div
+            initial={{ y: "100vh" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100vh" }}
             transition={{ duration: 0.55, ease: [0.2, 0.8, 0.25, 1] }}
             role="dialog"
             aria-modal="true"
             aria-label="Itinerary passport"
-            className="fixed bottom-0 left-1/2 z-[201] w-[min(700px,96vw)] pb-[max(env(safe-area-inset-bottom),14px)]"
+            className="pointer-events-auto relative w-[min(700px,96vw)]"
+            style={{ willChange: "transform" }}
           >
             <button
               onClick={onClose}
@@ -234,6 +238,7 @@ export default function PassportOverlay({
               </div>
             </div>
           </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>
