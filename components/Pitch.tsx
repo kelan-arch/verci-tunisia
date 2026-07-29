@@ -5,7 +5,6 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 
 const facts: [string, string][] = [
-  ["Best time to travel", "October"],
   ["Dates", "October 19 – 26, 2026"],
   ["Duration", "7 days / 6 nights"],
   ["Questers", "~30, exclusive use"],
@@ -40,7 +39,7 @@ const collage = [
   {
     src: "/images/brand/poster.jpg",
     alt: "VERCI in Tunisia poster — stone mark over the dunes",
-    caption: "The poster, October 2026",
+    caption: "Seven days, one caravan",
     className: "bottom-[2%] right-[3%] w-[37%] rotate-[3.2deg]",
     width: 540,
     height: 675,
