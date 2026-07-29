@@ -59,6 +59,11 @@ export default function Invitation() {
   // from a calm breath to full surge, then hold. Releasing discharges.
   const hovering = useRef(false);
   const charge = useRef(0);
+  // Hint nudging users to hover / hold the stone — fades in after a beat,
+  // fades out while charging, gone for good once they've cracked it once.
+  const hintDone = useRef(false);
+  const hintOpacity = useMotionValue(0);
+
   // Haptics while charging by touch — Android only (iOS has no vibrate API)
   const touchCharging = useRef(false);
   const lastHaptic = useRef(0);
@@ -123,10 +128,20 @@ export default function Invitation() {
 
     // Climax: fully charged → the stone splits, the energy discharges,
     // then the site dims and the film reveals itself.
+    // Hint: visible after 2.6s, hidden while charging or after first split
+    const hintTarget =
+      t > 2600 && phaseRef.current === "idle" && c < 0.05 && !hintDone.current
+        ? 1
+        : 0;
+    hintOpacity.set(
+      hintOpacity.get() + (hintTarget - hintOpacity.get()) * Math.min(1, dt / 450)
+    );
+
     if (c >= 1 && phaseRef.current === "idle") {
       phaseRef.current = "split";
       setPhase("split");
       charge.current = 0;
+      hintDone.current = true;
       // Haptic burst at the climax
       if (touchCharging.current) navigator.vibrate?.([70, 40, 90]);
       window.setTimeout(() => {
@@ -392,6 +407,21 @@ export default function Invitation() {
               />
             ))}
           </svg>
+
+          {/* Whispered hint — device-aware wording */}
+          <motion.p
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap text-center font-serif text-[0.85rem] italic tracking-wide text-[rgba(74,59,42,0.75)]"
+            style={{ opacity: hintOpacity }}
+          >
+            <motion.span
+              animate={{ opacity: [0.55, 1, 0.55] }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+              className="inline-block"
+            >
+              try to break me :)
+            </motion.span>
+          </motion.p>
         </motion.div>
       </div>
 
