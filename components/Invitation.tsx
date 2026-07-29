@@ -59,19 +59,11 @@ export default function Invitation() {
   // from a calm breath to full surge, then hold. Releasing discharges.
   const hovering = useRef(false);
   const charge = useRef(0);
-  // Haptics (touch only): Android via navigator.vibrate; iOS via the
-  // Safari 17.4+ hack — programmatically toggling a hidden switch-style
-  // checkbox fires a native haptic tick. Undocumented, may break.
+  // Haptics while charging by touch — Android only (iOS has no vibrate API)
   const touchCharging = useRef(false);
   const lastHaptic = useRef(0);
-  const switchRef = useRef<HTMLLabelElement>(null);
   const hapticTick = (strength: number) => {
-    if ("vibrate" in navigator && typeof navigator.vibrate === "function") {
-      navigator.vibrate(Math.round(8 + 32 * strength));
-    } else {
-      // Clicking the label (not the input) is what fires the haptic on iOS
-      switchRef.current?.click();
-    }
+    navigator.vibrate?.(Math.round(8 + 32 * strength));
   };
   const bloomOpacity = useMotionValue(0.55);
   const bloomScale = useMotionValue(1);
@@ -136,17 +128,7 @@ export default function Invitation() {
       setPhase("split");
       charge.current = 0;
       // Haptic burst at the climax
-      if (touchCharging.current) {
-        if ("vibrate" in navigator && typeof navigator.vibrate === "function") {
-          navigator.vibrate([70, 40, 90]);
-        } else {
-          let n = 0;
-          const id = window.setInterval(() => {
-            switchRef.current?.click();
-            if (++n >= 5) window.clearInterval(id);
-          }, 55);
-        }
-      }
+      if (touchCharging.current) navigator.vibrate?.([70, 40, 90]);
       window.setTimeout(() => {
         phaseRef.current = "cinema";
         setPhase("cinema");
@@ -443,25 +425,6 @@ export default function Invitation() {
         Begin the journey ↓
       </motion.span>
 
-      {/* iOS haptic hack: Safari 17.4+ fires a native haptic tick when a
-          switch-style checkbox toggles via its label. Hidden with opacity
-          only — display:none / clip-based hiding suppresses the haptic. */}
-      <label
-        ref={switchRef}
-        aria-hidden="true"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: 1,
-          height: 1,
-          opacity: 0,
-          pointerEvents: "none",
-        }}
-      >
-        <input type="checkbox" tabIndex={-1} {...{ switch: "" }} />
-      </label>
-
       {/* Cinema — the site dims and the film reveals itself.
           Swap the placeholder <div> for a <video> when the film is ready. */}
       <AnimatePresence>
@@ -490,24 +453,24 @@ export default function Invitation() {
               className="w-[min(880px,94vw)]"
             >
               <div
-                className="flex aspect-video w-full flex-col items-center justify-center gap-5 bg-black"
+                className="flex aspect-video w-full flex-col items-center justify-center gap-3 bg-black px-5 md:gap-5"
                 style={{ border: "1px solid rgba(196,167,125,0.35)" }}
               >
                 <motion.div
                   animate={{ scale: [1, 1.06, 1], opacity: [0.75, 1, 0.75] }}
                   transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-                  className="flex h-16 w-16 items-center justify-center rounded-full border border-[rgba(196,167,125,0.5)]"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[rgba(196,167,125,0.5)] md:h-16 md:w-16"
                 >
-                  <span className="ml-1 text-[1.2rem] text-sand">▶</span>
+                  <span className="ml-1 text-[0.9rem] text-sand md:text-[1.2rem]">▶</span>
                 </motion.div>
-                <p className="font-serif text-[clamp(1.1rem,2.4vw,1.5rem)] italic text-sand">
+                <p className="text-center font-serif text-[clamp(1rem,2.4vw,1.5rem)] italic text-sand">
                   The film — coming soon
                 </p>
-                <p className="font-sans text-[9px] uppercase tracking-[0.3em] text-[rgba(196,167,125,0.55)]">
+                <p className="text-center font-sans text-[7.5px] uppercase tracking-[0.18em] text-[rgba(196,167,125,0.55)] md:text-[9px] md:tracking-[0.3em]">
                   You broke the stone. You&rsquo;ve earned a first look.
                 </p>
               </div>
-              <div className="mt-3 flex items-baseline justify-between font-serif text-[0.9rem] italic text-[rgba(196,167,125,0.7)]">
+              <div className="mt-3 flex items-baseline justify-between gap-3 font-serif text-[0.75rem] italic text-[rgba(196,167,125,0.7)] md:text-[0.9rem]">
                 <span>VERCI in Tunisia — the film</span>
                 <span>October 2026</span>
               </div>
