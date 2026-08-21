@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter, Amiri } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+
+const bootzy = localFont({
+  src: "./fonts/Bootzy-TM-Regular.otf",
+  variable: "--font-bootzy",
+  display: "swap",
+});
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -43,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${inter.variable} ${amiri.variable} antialiased`}
+      className={`${bootzy.variable} ${cormorant.variable} ${inter.variable} ${amiri.variable} antialiased`}
     >
       <body className="bg-paper text-ink">{children}</body>
     </html>
