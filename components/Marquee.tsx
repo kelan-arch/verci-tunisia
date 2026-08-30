@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { Fragment } from "react";
 
 const items: { en: string; ar?: string }[] = [
+  { en: "La Marsa" },
   { en: "Tunis", ar: "تونس" },
+  { en: "Carthage", ar: "قرطاج" },
   { en: "Sidi Bou Saïd", ar: "سيدي بو سعيد" },
-  { en: "Testour" },
-  { en: "Dougga", ar: "دقة" },
   { en: "Cap Bon" },
   { en: "Tozeur", ar: "توزر" },
   { en: "Sahara", ar: "الصحراء" },

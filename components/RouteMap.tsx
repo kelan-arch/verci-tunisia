@@ -15,7 +15,7 @@ const stops = [
     cx: 382,
     cy: 64,
     tag: { x: 404, y: 60, anchor: "start" as const },
-    label: "Sidi Bou Saïd",
+    label: "La Marsa",
     illus: (
       <g transform="translate(390,26)">
         <g className="illus" filter="url(#rough2)">
@@ -45,14 +45,14 @@ const stops = [
   },
   {
     day: 2,
-    cx: 252,
-    cy: 112,
-    tag: { x: 196, y: 98, anchor: "end" as const },
-    label: "Testour & Dougga",
+    cx: 370,
+    cy: 72,
+    tag: { x: 296, y: 72, anchor: "end" as const },
+    label: "Carthage & Sidi Bou Saïd",
     illus: (
-      <g transform="translate(222,120)">
+      <g transform="translate(338,38)">
         <g className="illus" filter="url(#rough2)">
-          {/* roman columns */}
+          {/* roman columns — Antonine Baths */}
           <g stroke="#4a3b2a" strokeWidth="1.3" fill="none">
             <line x1="2" y1="4" x2="2" y2="18" />
             <line x1="9" y1="4" x2="9" y2="18" />
@@ -354,10 +354,9 @@ export default function RouteMap() {
             <path
               className="route-path"
               filter="url(#rough2)"
-              d="M 382 64 C 372 74, 362 76, 352 80
-                 C 316 92, 276 100, 252 112
-                 C 268 100, 320 78, 360 72
-                 C 396 66, 428 54, 452 50
+              d="M 382 64 C 378 70, 365 74, 352 80
+                 C 358 76, 366 72, 370 72
+                 C 390 66, 420 56, 452 50
                  C 448 74, 436 96, 420 116
                  C 396 150, 350 200, 310 250
                  C 270 300, 200 340, 138 380
@@ -429,7 +428,7 @@ export default function RouteMap() {
             <g filter="url(#rough2)" transform="translate(64,620)">
               <circle r="26" fill="none" stroke="#4a3b2a" strokeWidth="1.3" />
               <path d="M 0 -22 L 5 6 L 0 0 L -5 6 Z" fill="#b8442c" />
-              <text x="0" y="-32" textAnchor="middle" fontFamily="var(--font-cormorant)" fontStyle="italic" fontSize="15" fill="#4a3b2a">
+              <text x="0" y="-32" textAnchor="middle" fontFamily="var(--font-bootzy)" fontStyle="italic" fontSize="15" fill="#4a3b2a">
                 N
               </text>
             </g>
@@ -439,7 +438,7 @@ export default function RouteMap() {
               <line x1="0" y1="-4" x2="0" y2="4" />
               <line x1="45" y1="-3" x2="45" y2="3" />
               <line x1="90" y1="-4" x2="90" y2="4" />
-              <text x="45" y="17" textAnchor="middle" fontFamily="var(--font-cormorant)" fontStyle="italic" fontSize="12" fill="#4a3b2a" stroke="none">
+              <text x="45" y="17" textAnchor="middle" fontFamily="var(--font-bootzy)" fontStyle="italic" fontSize="12" fill="#4a3b2a" stroke="none">
                 100 km
               </text>
             </g>

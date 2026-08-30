@@ -151,7 +151,7 @@ export default function PassportOverlay({
             role="dialog"
             aria-modal="true"
             aria-label="Itinerary passport"
-            className="pointer-events-auto relative w-[min(700px,96vw)]"
+            className="pointer-events-auto relative w-[min(880px,96vw)]"
             style={{ willChange: "transform" }}
           >
             <button
@@ -178,9 +178,9 @@ export default function PassportOverlay({
                   height={380}
                   size="stretch"
                   minWidth={200}
-                  maxWidth={350}
+                  maxWidth={440}
                   minHeight={280}
-                  maxHeight={480}
+                  maxHeight={600}
                   showCover={false}
                   mobileScrollSupport={true}
                   onFlip={onFlip}

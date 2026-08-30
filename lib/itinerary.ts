@@ -9,17 +9,17 @@ export type ItineraryDay = {
   image: string;
 };
 
-/** Canonical V3 itinerary (design/PQ_VERCI_V3.pdf, "Suggested Itinerary"). */
+/** Canonical itinerary — aligned with "What we'll actually do" copy. */
 export const days: ItineraryDay[] = [
   {
     day: "01",
-    title: "Sidi Bou Saïd",
+    title: "La Marsa",
     subtitle: "Arrival",
     stamp: "TUNIS-CARTHAGE",
     date: "19 OCT 2026",
     code: "TUN",
     description:
-      "Arrival above the Gulf of Tunis. White walls, blue doors, bougainvillea, and a quality of light that has drawn artists here for over a century. A first unstructured walk — no agenda. Welcome dinner at Dar Zarrouk.",
+      "We take over a hotel on the coast just north of Carthage and use it as a basecamp. Mornings are for working and hanging out, with some small programming. Golden Carthage Hotel & Résidence — seafront, ten minutes from Sidi Bou Saïd, with the promenade and the beach in walking distance.",
     image: "/images/tunisia-034.jpg",
   },
   {
@@ -30,19 +30,19 @@ export const days: ItineraryDay[] = [
     date: "20 OCT 2026",
     code: "TUN",
     description:
-      "A guided walk through quarters few visitors reach — working ateliers, inner courtyards, artist residencies. Then Dar El Sanaa for the workshops: dinanderie, Arabic calligraphy, embroidery, wood sculpture, mosaic. Dinner in La Goulette.",
+      "Tunis's old city is one of the best-preserved medieval Islamic city centers anywhere — a UNESCO site with 700-odd monuments, founded in the 7th century and still completely lived in. We walk it with someone who can get us into the working ateliers and inner courtyards that aren't on any tour. The afternoon is at Dar El Sanaa: copper engraving, Arabic calligraphy, embroidery, wood carving, and mosaic. You pick one and leave with whatever you made.",
     image: "/images/tunisia-004.jpg",
   },
   {
     day: "03",
-    title: "Testour & Dougga",
-    subtitle: "Andalusia & Rome",
-    stamp: "THVGGA",
+    title: "Carthage & Sidi Bou Saïd",
+    subtitle: "Antiquity & Light",
+    stamp: "CARTHAGO · 814 BC",
     date: "21 OCT 2026",
-    code: "DGA",
+    code: "TUN",
     description:
-      "Testour, settled by Moriscos expelled from Spain — the Great Mosque, the malouf tradition. Then Dougga, the best-preserved Africo-Roman city in North Africa: never abruptly abandoned, never looted.",
-    image: "/images/tunisia-024.jpg",
+      "Carthage was founded around 814 BC and spent a few centuries running the western Mediterranean before Rome finally finished it off. What's left is worth the morning: the museum on Byrsa hill, the Tophet, the circular Punic ports, and the Antonine Baths, whose columns are still standing at the edge of the water. Sidi Bou Saïd in the afternoon — white walls, blue doors, the light that pulled Klee and Macke here a century ago — and Ennejma Ezzahra, a palace that's now the home of Tunisian musical heritage.",
+    image: "/images/tunisia-034.jpg",
   },
   {
     day: "04",
@@ -52,18 +52,18 @@ export const days: ItineraryDay[] = [
     date: "22 OCT 2026",
     code: "MED",
     description:
-      "A full day aboard a catamaran from Sidi Bou Saïd to Korbous — the coast seen from the sea, which is the only way to see it properly. Hidden coves, snorkelling, stand-up paddle, and long stretches of doing nothing in particular.",
+      "Cap Bon is the peninsula pointing at Sicily, the closest Africa gets to Europe. In October the sea is still warm and everyone else has gone home. Three options: a catamaran from Sidi Bou Saïd to Korbous, the cove at Mteris at the northern tip, or kayaks and paddleboards from Port aux Princes along the coast to a cove where lunch is already waiting.",
     image: "/images/tunisia-030.jpg",
   },
   {
     day: "05",
-    title: "Tozeur",
-    subtitle: "Seven Hours South",
+    title: "The Drive South",
+    subtitle: "Tozeur & the Oases",
     stamp: "TOZEUR · OASIS",
     date: "23 OCT 2026",
     code: "TOZ",
     description:
-      "Coast to steppe to the first palm groves. The mountain oases of Chebika and Mides — springs, waterfalls, deep canyons. Night in the palmeraie among 400,000 date palms at Diar Abou Habibi.",
+      "Coast to steppe to palm grove over about seven hours, with lunch at Tamarza when we arrive. Then the mountain oases — Tamarza, Chébika, and Midès — where springs and waterfalls run through the rock and a canyon opens up under your feet. Late afternoon at Mos Espa near Nefta, the Star Wars set that's still sitting out in the sand, with a drink while the sun goes down.",
     image: "/images/tunisia-046.jpg",
   },
   {
@@ -74,7 +74,7 @@ export const days: ItineraryDay[] = [
     date: "24 OCT 2026",
     code: "SAH",
     description:
-      "The road narrows, then disappears. Afternoon at the rhythm of the dunes — on foot, by camel, or watching the light shift. Dinner around a fire. Night under the open sky: no electricity, no schedule, just silence and stars.",
+      "Past Tozeur the road narrows and then stops, and the Grand Erg Oriental starts — one of the two great sand seas of the desert. No signal, no noise, nothing to fix your eye on. The afternoon goes at whatever pace the dunes set: walking, camels, or sitting still and watching the light change. Dinner around a fire, then you sleep outside. Most people say this is the part they remember.",
     image: "/images/tunisia-076.jpg",
   },
   {

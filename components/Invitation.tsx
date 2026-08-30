@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
-  AnimatePresence,
   motion,
   useAnimationFrame,
   useMotionTemplate,
@@ -41,7 +40,7 @@ const LEFT_CLIP =
 const RIGHT_CLIP =
   "polygon(52% 0%, 100% 0%, 100% 100%, 49% 100%, 53% 90%, 46% 78%, 56% 62%, 47% 46%, 55% 30%, 46% 14%)";
 
-type Phase = "idle" | "split" | "cinema" | "reforming";
+type Phase = "idle" | "split" | "reforming";
 
 export default function Invitation() {
   // Pointer-driven tilt: the stone leans toward the cursor as if suspended.
@@ -97,24 +96,6 @@ export default function Invitation() {
   const glowB = useMotionValue(0.35);
   const glowFilter = useMotionTemplate`drop-shadow(0 0 22px rgba(255,246,205,${glowA})) drop-shadow(0 0 60px rgba(255,240,185,${glowB})) drop-shadow(0 18px 30px rgba(60,50,35,0.22))`;
 
-  const closeCinema = () => {
-    phaseRef.current = "reforming";
-    setPhase("reforming");
-  };
-
-  // Cinema: lock scroll, close on Escape
-  useEffect(() => {
-    if (phase !== "cinema") return;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeCinema();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [phase]);
 
   useAnimationFrame((t, dt) => {
     // Power snaps toward 0 the instant the stone splits, back to 1 on reform
@@ -144,10 +125,12 @@ export default function Invitation() {
       hintDone.current = true;
       // Haptic burst at the climax
       if (touchCharging.current) navigator.vibrate?.([70, 40, 90]);
+      // Scroll to the Instagram video, then reform
       window.setTimeout(() => {
-        phaseRef.current = "cinema";
-        setPhase("cinema");
-      }, 500);
+        document.getElementById("ig-video")?.scrollIntoView({ behavior: "smooth" });
+        phaseRef.current = "reforming";
+        setPhase("reforming");
+      }, 800);
     }
 
     // Haptic ramp while charging by touch: ticks speed up with charge
@@ -227,7 +210,7 @@ export default function Invitation() {
           className="text-center font-sans text-[11px] uppercase tracking-[0.38em] text-[#f4efdf]"
           style={{ textShadow: "0 1px 8px rgba(60,70,80,0.25)" }}
         >
-          wanderquest × verci nyc — a private quest
+          ARTIFEX
         </motion.p>
         <h1 className="sr-only">Verci in Tunisia — October 19 to 26, 2026</h1>
 
@@ -235,7 +218,7 @@ export default function Invitation() {
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.4, delay: 0.5 }}
-          className="relative my-auto w-[clamp(260px,46vw,500px)] py-4"
+          className="relative my-auto w-[clamp(340px,60vw,720px)] py-4"
           style={{ perspective: 900 }}
         >
           {/* Big soft bloom so the whole thing reads as glowing light */}
@@ -331,12 +314,12 @@ export default function Invitation() {
           >
             <motion.div
               animate={
-                phase === "split" || phase === "cinema"
+                phase === "split"
                   ? { x: -46, y: 12, rotate: -8 }
                   : { x: 0, y: 0, rotate: 0 }
               }
               transition={
-                phase === "split" || phase === "cinema"
+                phase === "split"
                   ? { type: "spring", stiffness: 320, damping: 15 }
                   : { type: "spring", stiffness: 70, damping: 16 }
               }
@@ -363,12 +346,12 @@ export default function Invitation() {
               aria-hidden="true"
               className="absolute inset-0"
               animate={
-                phase === "split" || phase === "cinema"
+                phase === "split"
                   ? { x: 46, y: 5, rotate: 7 }
                   : { x: 0, y: 0, rotate: 0 }
               }
               transition={
-                phase === "split" || phase === "cinema"
+                phase === "split"
                   ? { type: "spring", stiffness: 320, damping: 15 }
                   : { type: "spring", stiffness: 70, damping: 16 }
               }
@@ -455,59 +438,6 @@ export default function Invitation() {
         Begin the journey ↓
       </motion.span>
 
-      {/* Cinema — the site dims and the film reveals itself.
-          Swap the placeholder <div> for a <video> when the film is ready. */}
-      <AnimatePresence>
-        {phase === "cinema" && (
-          <motion.div
-            key="cinema"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7 }}
-            onClick={closeCinema}
-            className="fixed inset-0 z-[300] flex items-center justify-center bg-[rgba(8,9,12,0.93)] px-4 backdrop-blur-[4px]"
-          >
-            <button
-              onClick={closeCinema}
-              className="absolute right-5 top-5 font-sans text-[10px] uppercase tracking-[0.26em] text-sand transition-opacity hover:opacity-70"
-            >
-              ✕ &nbsp;Close
-            </button>
-            <motion.div
-              initial={{ opacity: 0, y: 18, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.6, delay: 0.4, ease: [0.2, 0.8, 0.25, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="w-[min(880px,94vw)]"
-            >
-              <div
-                className="flex aspect-video w-full flex-col items-center justify-center gap-3 bg-black px-5 md:gap-5"
-                style={{ border: "1px solid rgba(196,167,125,0.35)" }}
-              >
-                <motion.div
-                  animate={{ scale: [1, 1.06, 1], opacity: [0.75, 1, 0.75] }}
-                  transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[rgba(196,167,125,0.5)] md:h-16 md:w-16"
-                >
-                  <span className="ml-1 text-[0.9rem] text-sand md:text-[1.2rem]">▶</span>
-                </motion.div>
-                <p className="text-center font-serif text-[clamp(1rem,2.4vw,1.5rem)] italic text-sand">
-                  The film — coming soon
-                </p>
-                <p className="text-center font-sans text-[7.5px] uppercase tracking-[0.18em] text-[rgba(196,167,125,0.55)] md:text-[9px] md:tracking-[0.3em]">
-                  You broke the stone. You&rsquo;ve earned a first look.
-                </p>
-              </div>
-              <div className="mt-3 flex items-baseline justify-between gap-3 font-serif text-[0.75rem] italic text-[rgba(196,167,125,0.7)] md:text-[0.9rem]">
-                <span>VERCI in Tunisia — the film</span>
-                <span>October 2026</span>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   );
 }

@@ -1,11 +1,16 @@
 import Invitation from "@/components/Invitation";
 import Marquee from "@/components/Marquee";
-import Pitch from "@/components/Pitch";
+import AboutSection from "@/components/AboutSection";
+import TheWeek from "@/components/TheWeek";
+import InstagramEmbed from "@/components/InstagramEmbed";
+import Accommodations from "@/components/Accommodations";
+import WhosComing from "@/components/WhosComing";
+import Eating from "@/components/Eating";
+import Activities from "@/components/Activities";
+import GettingThere from "@/components/GettingThere";
 import RouteMap from "@/components/RouteMap";
 import Postcards from "@/components/Postcards";
-import HeadingSouth from "@/components/HeadingSouth";
-import Oases from "@/components/Oases";
-import SaharaNight from "@/components/SaharaNight";
+import FAQ from "@/components/FAQ";
 import JoinCTA from "@/components/JoinCTA";
 import Footer from "@/components/Footer";
 
@@ -14,12 +19,17 @@ export default function Home() {
     <main className="grain">
       <Invitation />
       <Marquee />
-      <Pitch />
+      <AboutSection />
+      <TheWeek />
+      <InstagramEmbed />
+      <Accommodations />
+      <WhosComing />
+      <Eating />
+      <Activities />
       <RouteMap />
       <Postcards />
-      <HeadingSouth />
-      <Oases />
-      <SaharaNight />
+      <GettingThere />
+      <FAQ />
       <JoinCTA />
       <Footer />
     </main>
