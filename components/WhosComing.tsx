@@ -16,7 +16,7 @@ export default function WhosComing() {
           "linear-gradient(180deg, #33202a 0%, var(--color-nightblue) 100%)",
       }}
     >
-      <div className="mx-auto w-[min(720px,92vw)] text-center">
+      <div className="mx-auto w-[min(720px,92vw)]">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
