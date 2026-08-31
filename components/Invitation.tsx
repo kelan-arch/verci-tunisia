@@ -128,6 +128,7 @@ export default function Invitation() {
       // Scroll to the Instagram video, then reform
       window.setTimeout(() => {
         document.getElementById("ig-video")?.scrollIntoView({ behavior: "smooth" });
+        window.dispatchEvent(new Event("stone-cracked"));
         phaseRef.current = "reforming";
         setPhase("reforming");
       }, 800);

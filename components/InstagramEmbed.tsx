@@ -1,11 +1,29 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 export default function InstagramEmbed() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Cracking the stone scrolls here and kicks off the film — with sound if
+  // the browser lets us, muted otherwise.
+  useEffect(() => {
+    const onCrack = () => {
+      const v = videoRef.current;
+      if (!v) return;
+      v.currentTime = 0;
+      v.muted = false;
+      v.play().catch(() => {
+        v.muted = true;
+        v.play().catch(() => {});
+      });
+    };
+    window.addEventListener("stone-cracked", onCrack);
+    return () => window.removeEventListener("stone-cracked", onCrack);
+  }, []);
 
   return (
     <section ref={ref} id="ig-video" className="flex min-h-svh flex-col justify-center bg-paper py-8">
@@ -22,13 +40,16 @@ export default function InstagramEmbed() {
           <h2 className="mb-5 font-serif text-[clamp(1.4rem,2.6vw,1.9rem)] italic text-ink">
             Austrian Alps, Winter 2025
           </h2>
-          <div className="relative w-full overflow-hidden rounded-sm">
-            <iframe
-              src="https://www.instagram.com/p/DWPKNpcDo_Z/embed"
-              title="Verci Austria Alps retreat reel"
-              allowFullScreen
-              className="h-[min(68svh,660px)] w-full border-0"
-              loading="lazy"
+          <div className="relative w-[min(880px,94vw)] overflow-hidden rounded-sm">
+            <video
+              ref={videoRef}
+              src="/videos/verci-austria.mp4"
+              className="w-full"
+              muted
+              loop
+              playsInline
+              controls
+              preload="auto"
             />
           </div>
 
