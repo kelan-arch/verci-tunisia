@@ -195,7 +195,7 @@ export default function Invitation() {
         mx.set(0);
         my.set(0);
       }}
-      className="relative flex min-h-[calc(100svh/0.9)] flex-col overflow-hidden"
+      className="relative flex min-h-[calc(100dvh/0.9)] flex-col overflow-hidden"
       style={{
         background:
           "linear-gradient(180deg, #aebfc9 0%, #c3cbc6 34%, #ddd6bd 62%, #e8dfc4 100%)",
@@ -204,22 +204,28 @@ export default function Invitation() {
       <div className="halftone" />
 
       <div className="relative z-[2] flex flex-1 flex-col items-center px-6 pt-[clamp(2rem,5vh,4rem)]">
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.2 }}
-          className="text-center font-sans text-[11px] uppercase tracking-[0.38em] text-[#f4efdf]"
-          style={{ textShadow: "0 1px 8px rgba(60,70,80,0.25)" }}
         >
-          ARTIFEX
-        </motion.p>
+          <Image
+            src="/images/brand/artifex.svg"
+            alt="Artifex"
+            width={1027}
+            height={502}
+            priority
+            className="w-[clamp(110px,14vw,170px)]"
+            style={{ filter: "drop-shadow(0 1px 8px rgba(60,70,80,0.25))" }}
+          />
+        </motion.div>
         <h1 className="sr-only">Verci in Tunisia — October 19 to 26, 2026</h1>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.4, delay: 0.5 }}
-          className="relative my-auto w-[clamp(340px,60vw,720px)] py-4"
+          className="relative my-auto w-[min(clamp(340px,60vw,720px),70vh)] py-4"
           style={{ perspective: 900 }}
         >
           {/* Big soft bloom so the whole thing reads as glowing light */}
@@ -412,7 +418,7 @@ export default function Invitation() {
       {/* Photo fades in from transparent over the header gradient — no
           color-matched overlay, so there is no seam to see. */}
       <div
-        className="relative -mt-[clamp(60px,10vh,120px)] h-[clamp(240px,40vh,440px)]"
+        className="relative -mt-[clamp(140px,36vh,380px)] h-[clamp(240px,40vh,440px)]"
         style={{
           maskImage:
             "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.35) 35%, rgba(0,0,0,0.8) 58%, #000 78%)",
@@ -429,15 +435,6 @@ export default function Invitation() {
           style={{ filter: "sepia(0.32) saturate(0.92) contrast(0.98) brightness(1.04)" }}
         />
       </div>
-
-      <motion.span
-        animate={{ y: [0, 7, 0] }}
-        transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-3.5 left-1/2 z-[3] -translate-x-1/2 font-sans text-[10px] uppercase tracking-[0.3em] text-[#fdf8ea]"
-        style={{ textShadow: "0 1px 6px rgba(0,0,0,0.4)" }}
-      >
-        Begin the journey ↓
-      </motion.span>
 
     </header>
   );

@@ -19,7 +19,7 @@ export default function JoinCTA() {
 
   return (
     <section
-      className="py-[clamp(5rem,12vh,9rem)] text-[#e9e2d2]"
+      className="sec-screen py-[clamp(5rem,12vh,9rem)] text-[#e9e2d2]"
       style={{ background: "linear-gradient(180deg, var(--color-night) 0%, #12100c 100%)" }}
     >
       <div ref={ref} className="mx-auto w-[min(1120px,92vw)]">

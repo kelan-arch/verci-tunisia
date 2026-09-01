@@ -220,6 +220,16 @@ body {
   overflow: hidden !important;
 }
 
+/* Full-screen journal page: every section fills at least one real screen
+   (100dvh compensated for the global 0.9 zoom) with content centered, so
+   the next section never peeks in at a natural resting position. */
+.sec-screen {
+  min-height: calc(100dvh / 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /* Image hover zoom */
 .img-zoom {
   overflow: hidden;

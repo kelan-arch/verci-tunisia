@@ -35,7 +35,7 @@ const PhotoPage = forwardRef<HTMLDivElement, { day: ItineraryDay }>(
       <Page ref={ref}>
         <div className="flex h-full flex-col p-4 md:p-5">
           <div className="relative flex-1 overflow-hidden" style={{ border: "1px solid rgba(0,0,0,0.08)" }}>
-            <Image src={day.image} alt={day.title} fill className="object-cover" sizes="300px" />
+            <Image src={day.image} alt={day.title} fill className="object-cover" sizes="300px" style={{ objectPosition: day.imagePosition ?? "center" }} />
           </div>
           <div className="mt-2 flex items-center justify-between">
             <p className="font-sans text-[5px] uppercase tracking-[0.3em] md:text-[6px]" style={{ color: "rgba(0,0,0,0.18)" }}>Day {day.day}</p>

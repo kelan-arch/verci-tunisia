@@ -28,7 +28,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section ref={ref} className="bg-nightblue py-[clamp(5rem,11vh,8rem)]">
+    <section ref={ref} className="sec-screen bg-nightblue py-[clamp(5rem,11vh,8rem)]">
       <div className="mx-auto w-[min(760px,92vw)]">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}

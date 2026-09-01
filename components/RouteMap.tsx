@@ -170,7 +170,7 @@ export default function RouteMap() {
           transition={{ duration: 0.9 }}
           className="sec-label font-sans"
         >
-          Suggested Itinerary
+          Itinerary
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 26 }}

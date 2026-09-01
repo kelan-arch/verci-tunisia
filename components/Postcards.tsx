@@ -5,12 +5,12 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 
 const cards = [
-  { src: "/images/tunisia-004.jpg", alt: "Medina of Tunis", title: "The living medina", no: "№ 01" },
-  { src: "/images/tunisia-012.jpg", alt: "Artisan hands at work", title: "Hands of the masters", no: "№ 02" },
-  { src: "/images/tunisia-026.jpg", alt: "Dougga panoramic", title: "Rome, undisturbed", no: "№ 03" },
-  { src: "/images/tunisia-030.jpg", alt: "Catamaran on the Mediterranean", title: "Reading the wind", no: "№ 04" },
-  { src: "/images/tunisia-048.jpg", alt: "Chebika waterfall", title: "Water in the mountains", no: "№ 05" },
-  { src: "/images/tunisia-082.jpg", alt: "Sahara dunes", title: "The sand sea", no: "№ 06" },
+  { src: "/images/brochure/medina-clock-tower.jpg", alt: "Medina of Tunis", title: "The living medina", no: "№ 01" },
+  { src: "/images/brochure/copper-hands.jpg", alt: "Copper engraver's hands at work", title: "Hands of the masters", no: "№ 02" },
+  { src: "/images/brochure/carthage-ruins.jpg", alt: "Carthage ruins above the sea", title: "Rome, undisturbed", no: "№ 03" },
+  { src: "/images/brochure/catamaran.jpg", alt: "Catamaran on the Mediterranean", title: "Reading the wind", no: "№ 04" },
+  { src: "/images/brochure/chebika-waterfall.jpg", alt: "Chebika waterfall", title: "Water in the mountains", no: "№ 05" },
+  { src: "/images/brochure/nomad-fire.jpg", alt: "Nomad host by the fire in the dunes", title: "The sand sea", no: "№ 06" },
 ];
 
 export default function Postcards() {
@@ -18,7 +18,7 @@ export default function Postcards() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="overflow-hidden bg-paper py-[clamp(5rem,10vh,8rem)]">
+    <section className="sec-screen overflow-hidden bg-paper py-[clamp(5rem,10vh,8rem)]">
       <div ref={ref} className="mx-auto w-[min(1120px,92vw)]">
         <motion.p
           initial={{ opacity: 0, y: 20 }}

@@ -8,7 +8,7 @@ export default function GettingThere() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="bg-night py-[clamp(5rem,11vh,8rem)]">
+    <section ref={ref} className="sec-screen bg-night py-[clamp(5rem,11vh,8rem)]">
       <div className="mx-auto w-[min(720px,92vw)] text-center">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}

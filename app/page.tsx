@@ -1,11 +1,9 @@
 import Invitation from "@/components/Invitation";
-import Marquee from "@/components/Marquee";
 import AboutSection from "@/components/AboutSection";
 import TheWeek from "@/components/TheWeek";
 import InstagramEmbed from "@/components/InstagramEmbed";
 import Accommodations from "@/components/Accommodations";
 import WhosComing from "@/components/WhosComing";
-import Eating from "@/components/Eating";
 import Activities from "@/components/Activities";
 import GettingThere from "@/components/GettingThere";
 import RouteMap from "@/components/RouteMap";
@@ -18,17 +16,15 @@ export default function Home() {
   return (
     <main className="grain">
       <Invitation />
-      <Marquee />
       <AboutSection />
       <TheWeek />
-      <InstagramEmbed />
+      <RouteMap />
       <Accommodations />
       <WhosComing />
-      <Eating />
       <Activities />
-      <RouteMap />
       <Postcards />
       <GettingThere />
+      <InstagramEmbed />
       <FAQ />
       <JoinCTA />
       <Footer />

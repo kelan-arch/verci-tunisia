@@ -80,11 +80,11 @@ export default function Accommodations() {
             <figure className="img-zoom relative overflow-hidden before:absolute before:-inset-3 before:-z-[1] before:border-[1.5px] before:border-dashed before:border-[rgba(240,231,211,0.3)] before:content-['']">
               <div className="relative aspect-[4/3] w-full">
                 <Image
-                  src="/images/tunisia-092.jpg"
-                  alt="Diar Abou Habibi lodge in palm grove"
+                  src="/images/diar-abou-habibi-room.png"
+                  alt="Carved wooden bedroom at Diar Abou Habibi"
                   fill
                   sizes="(max-width: 768px) 92vw, 480px"
-                  className="object-cover"
+                  className="object-cover object-[center_75%]"
                 />
               </div>
               <figcaption className="pt-3 font-serif text-[0.85rem] italic text-[rgba(240,231,211,0.7)]">
