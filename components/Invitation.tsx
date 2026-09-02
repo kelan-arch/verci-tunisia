@@ -285,25 +285,25 @@ export default function Invitation() {
               pointer tilt. At full charge the stone splits along a jagged
               crack: two clipped halves fly apart, then drift back together. */}
           <motion.div
-            onHoverStart={() => (hovering.current = true)}
-            onHoverEnd={() => (hovering.current = false)}
+            // Charging requires press-and-hold on every device. Hover alone
+            // must not crack the stone: a real pointerdown gives the page
+            // sticky user activation, which is what lets the reveal film
+            // autoplay with sound.
             onPointerDown={(e) => {
-              if (e.pointerType !== "mouse") {
-                touchCharging.current = true;
-                hovering.current = true;
-              }
+              if (e.pointerType !== "mouse") touchCharging.current = true;
+              hovering.current = true;
             }}
             onPointerUp={() => {
-              if (touchCharging.current) {
-                touchCharging.current = false;
-                hovering.current = false;
-              }
+              touchCharging.current = false;
+              hovering.current = false;
+            }}
+            onPointerLeave={() => {
+              touchCharging.current = false;
+              hovering.current = false;
             }}
             onPointerCancel={() => {
-              if (touchCharging.current) {
-                touchCharging.current = false;
-                hovering.current = false;
-              }
+              touchCharging.current = false;
+              hovering.current = false;
             }}
             onContextMenu={(e) => e.preventDefault()}
             className="select-none"
