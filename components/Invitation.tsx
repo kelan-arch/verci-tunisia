@@ -314,7 +314,10 @@ export default function Invitation() {
               y: floatY,
               rotate: shakeRot,
               filter: glowFilter,
-              touchAction: "none",
+              // pan-y lets a vertical drag scroll the page normally (the
+              // browser cancels the pointer, which stops the charge); a
+              // still press-and-hold keeps charging the stone.
+              touchAction: "pan-y",
               WebkitTouchCallout: "none",
             }}
           >
