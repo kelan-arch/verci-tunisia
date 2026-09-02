@@ -62,7 +62,9 @@ export default function JoinCTA() {
               ))}
             </ul>
             <a
-              href="mailto:ami@verci.com"
+              href="https://airtable.com/appfHYP1FsRGQoYeT/pagwo4elSg0CbGMOb/form"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-9 inline-block rounded-[3px] bg-brick px-8 py-4 font-sans text-[11px] uppercase tracking-[0.3em] text-[#f6efdd] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#99351f]"
             >
               Request an invitation

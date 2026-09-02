@@ -1,4 +1,5 @@
 import Invitation from "@/components/Invitation";
+import CrackReveal from "@/components/CrackReveal";
 import AboutSection from "@/components/AboutSection";
 import TheWeek from "@/components/TheWeek";
 import InstagramEmbed from "@/components/InstagramEmbed";
@@ -15,6 +16,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <main className="grain">
+      <CrackReveal />
       <Invitation />
       <AboutSection />
       <TheWeek />

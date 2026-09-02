@@ -18,22 +18,16 @@ export default function Accommodations() {
       }}
     >
       <div className="mx-auto w-[min(1120px,92vw)]">
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9 }}
-          className="mb-12 font-serif text-[clamp(2rem,5vw,3.6rem)] font-medium leading-[1.08]"
-        >
-          Where you&rsquo;ll stay
-        </motion.h2>
-
-        <div className="grid grid-cols-1 items-start gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid grid-cols-1 items-center gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1.1fr_0.9fr]">
           <motion.div
             initial={{ opacity: 0, y: 26 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.15 }}
             className="space-y-5 font-serif text-[clamp(1.05rem,1.5vw,1.2rem)] leading-[1.7]"
           >
+            <h2 className="mb-6 font-serif text-[clamp(2rem,5vw,3.6rem)] font-medium leading-[1.08]">
+              Where you&rsquo;ll stay
+            </h2>
             <p>
               Golden Carthage Hotel &amp; R&eacute;sidence, in La Marsa &mdash; a
               seafront town at the top of the Carthage coast, ten minutes from

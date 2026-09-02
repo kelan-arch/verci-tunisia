@@ -8,7 +8,7 @@ export default function TheWeek() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="sec-screen bg-paper py-[clamp(5rem,11vh,8rem)]">
+    <section ref={ref} className="bg-paper py-[clamp(5rem,11vh,8rem)]">
       <div className="mx-auto w-[min(1120px,92vw)]">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}

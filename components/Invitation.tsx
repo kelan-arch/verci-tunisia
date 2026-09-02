@@ -125,13 +125,12 @@ export default function Invitation() {
       hintDone.current = true;
       // Haptic burst at the climax
       if (touchCharging.current) navigator.vibrate?.([70, 40, 90]);
-      // Scroll to the Instagram video, then reform
+      // Kick off the fullscreen reveal, then reform
       window.setTimeout(() => {
-        document.getElementById("ig-video")?.scrollIntoView({ behavior: "smooth" });
         window.dispatchEvent(new Event("stone-cracked"));
         phaseRef.current = "reforming";
         setPhase("reforming");
-      }, 800);
+      }, 400);
     }
 
     // Haptic ramp while charging by touch: ticks speed up with charge
