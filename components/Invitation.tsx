@@ -196,14 +196,14 @@ export default function Invitation() {
       }}
       className="relative flex min-h-dvh flex-col overflow-hidden md:min-h-[calc(100dvh/0.9)]"
     >
-      {/* Sidi Bou Saïd terrace over the bay */}
+      {/* Sahara dunes at golden hour */}
       <Image
-        src="/images/hero-sidi-bou-said.jpg"
-        alt="Sidi Bou Saïd terrace overlooking the marina"
+        src="/images/hero-sahara.webp"
+        alt="Nomad walking the dunes of the Grand Erg Oriental at golden hour"
         fill
         priority
         className="object-cover"
-        style={{ filter: "sepia(0.18) saturate(0.94) brightness(1.02)" }}
+        style={{ filter: "sepia(0.12) saturate(0.96) brightness(1.02)" }}
       />
       <div className="halftone" />
 
