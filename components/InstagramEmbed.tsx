@@ -8,7 +8,7 @@ export default function InstagramEmbed() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} id="ig-video" className="flex min-h-[calc(100dvh/0.9+10rem)] flex-col justify-center bg-paper py-8">
+    <section ref={ref} id="ig-video" className="flex min-h-[calc(100dvh+10rem)] flex-col justify-center bg-paper py-8 md:min-h-[calc(100dvh/0.9+10rem)]">
       <div className="mx-auto w-[min(560px,90vw)] text-center">
         <motion.div
           initial={{ opacity: 0, y: 26 }}

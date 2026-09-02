@@ -194,7 +194,7 @@ export default function Invitation() {
         mx.set(0);
         my.set(0);
       }}
-      className="relative flex min-h-[calc(100dvh/0.9)] flex-col overflow-hidden"
+      className="relative flex min-h-dvh flex-col overflow-hidden md:min-h-[calc(100dvh/0.9)]"
       style={{
         background:
           "linear-gradient(180deg, #aebfc9 0%, #c3cbc6 34%, #ddd6bd 62%, #e8dfc4 100%)",

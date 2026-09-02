@@ -36,10 +36,13 @@ html {
   overflow-x: clip;
 }
 
-/* Render the whole page at 90% by default — the layout was tuned at
-   this density (matches 90% browser zoom on desktop and mobile). */
-html {
-  zoom: 0.9;
+/* Render the page at 90% on desktop — the layout was tuned at this
+   density. Not applied on phones: iOS Safari mis-sizes fixed overlays
+   and viewport units under zoom, which broke fullscreen modals. */
+@media (min-width: 768px) {
+  html {
+    zoom: 0.9;
+  }
 }
 
 body {
@@ -221,13 +224,18 @@ body {
 }
 
 /* Full-screen journal page: every section fills at least one real screen
-   (100dvh compensated for the global 0.9 zoom) with content centered, so
-   the next section never peeks in at a natural resting position. */
+   (on desktop, 100dvh compensated for the 0.9 zoom) with content centered,
+   so the next section never peeks in at a natural resting position. */
 .sec-screen {
-  min-height: calc(100dvh / 0.9);
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+@media (min-width: 768px) {
+  .sec-screen {
+    min-height: calc(100dvh / 0.9);
+  }
 }
 
 /* Image hover zoom */
