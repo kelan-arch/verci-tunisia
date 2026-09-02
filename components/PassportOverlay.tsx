@@ -63,11 +63,11 @@ const InfoPage = forwardRef<HTMLDivElement, { day: ItineraryDay }>(
       <Page ref={ref}>
         <div className="flex h-full flex-col p-4 md:p-5">
           <div className="mb-2 border-b pb-1.5" style={{ borderColor: "rgba(0,0,0,0.05)" }}>
-            <p className="font-sans text-[5px] uppercase tracking-[0.5em] md:text-[6px]" style={{ color: "rgba(0,0,0,0.18)" }}>Day {day.day} &mdash; {day.subtitle}</p>
+            <p className="font-sans text-[8px] uppercase tracking-[0.35em] md:text-[9px]" style={{ color: "rgba(0,0,0,0.32)" }}>Day {day.day} &mdash; {day.subtitle}</p>
           </div>
-          <h3 className="font-serif text-base md:text-lg" style={{ color: "rgba(20,18,14,0.85)" }}>{day.title}</h3>
+          <h3 className="font-serif text-xl md:text-2xl" style={{ color: "rgba(20,18,14,0.85)" }}>{day.title}</h3>
           <div className="mt-1.5 h-px w-6" style={{ background: "rgba(0,0,0,0.06)" }} />
-          <p className="mt-1.5 flex-1 font-sans text-[9px] leading-[1.8] md:text-[10px] md:leading-[1.9]" style={{ color: "rgba(20,18,14,0.4)" }}>{day.description}</p>
+          <p className="mt-1.5 flex-1 font-serif text-[14px] leading-[1.5] md:text-[15px] md:leading-[1.55]" style={{ color: "rgba(20,18,14,0.62)" }}>{day.description}</p>
           <div className="mt-2 border-t pt-1.5" style={{ borderColor: "rgba(0,0,0,0.04)" }}>
             <p className="font-mono text-[4px] leading-relaxed tracking-[0.05em] md:text-[5px]" style={{ color: "rgba(0,0,0,0.08)" }}>
               P&lt;TUN/VERCI&lt;&lt;WQ&lt;&lt;{day.code}&lt;&lt;DAY{day.day}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br />
