@@ -8,18 +8,20 @@ const LINES = [
   "Austrian Alps, Winter 2025",
   "Thirty of us, one hotel, five days.",
 ];
+const OUTRO_LINES = ["Don’t let this moment slip.", "Join us :)"];
 const CHAR_MS = 40;
 const LINE_HOLD_MS = 1200; // finished line lingers alone before the next
 const BLANK_MS = 350; // empty beat between lines
 const HOLD_MS = 900;
 const BG = "#f7f2e6";
 
-type Phase = "hidden" | "typing" | "film";
+type Phase = "hidden" | "typing" | "film" | "outro";
 
 export default function CrackReveal() {
   const [phase, setPhase] = useState<Phase>("hidden");
   const [line, setLine] = useState(0);
   const [typed, setTyped] = useState(0);
+  const [outroDone, setOutroDone] = useState(false);
   const [needsSound, setNeedsSound] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const open = phase !== "hidden";
@@ -41,6 +43,7 @@ export default function CrackReveal() {
     const onCrack = () => {
       setLine(0);
       setTyped(0);
+      setOutroDone(false);
       setPhase("typing");
     };
     window.addEventListener("pointerdown", prime, { once: true });
@@ -52,20 +55,22 @@ export default function CrackReveal() {
   }, []);
 
   // Typewriter: each line types alone, lingers, then clears for the next.
+  // Runs for both the intro (into the film) and the outro (after the film).
   useEffect(() => {
-    if (phase !== "typing") return;
+    if (phase !== "typing" && phase !== "outro") return;
+    const lines = phase === "outro" ? OUTRO_LINES : LINES;
     let li = 0;
     let ci = 0;
     let t: number;
     const tick = () => {
       ci += 1;
       setTyped(ci);
-      if (ci < LINES[li].length) {
+      if (ci < lines[li].length) {
         t = window.setTimeout(tick, CHAR_MS);
         return;
       }
-      // Line finished — hold it, then either blank into the next or reveal
-      if (li < LINES.length - 1) {
+      // Line finished — hold it, then either blank into the next or finish
+      if (li < lines.length - 1) {
         t = window.setTimeout(() => {
           li += 1;
           ci = 0;
@@ -73,8 +78,11 @@ export default function CrackReveal() {
           setTyped(0);
           t = window.setTimeout(tick, BLANK_MS);
         }, LINE_HOLD_MS);
-      } else {
+      } else if (phase === "typing") {
         t = window.setTimeout(() => setPhase("film"), LINE_HOLD_MS + HOLD_MS);
+      } else {
+        // Outro: the last line stays put; surface the Apply button and ✕.
+        t = window.setTimeout(() => setOutroDone(true), 500);
       }
     };
     t = window.setTimeout(tick, 200);
@@ -117,7 +125,16 @@ export default function CrackReveal() {
   const close = () => {
     videoRef.current?.pause();
     setNeedsSound(false);
+    setOutroDone(false);
     setPhase("hidden");
+  };
+
+  const startOutro = () => {
+    videoRef.current?.pause();
+    setLine(0);
+    setTyped(0);
+    setOutroDone(false);
+    setPhase("outro");
   };
 
   const unmute = () => {
@@ -160,10 +177,41 @@ export default function CrackReveal() {
               className="px-6 text-center"
             >
               <p className={`min-h-[1.3em] ${lineStyle}`}>
-                {LINES[line].slice(0, typed)}
+                {(phase === "outro" ? OUTRO_LINES : LINES)[line].slice(0, typed)}
                 <Cursor />
               </p>
+              {phase === "outro" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={outroDone ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.7 }}
+                  className={`mt-10 ${outroDone ? "" : "pointer-events-none"}`}
+                >
+                  <a
+                    href="https://airtable.com/appfHYP1FsRGQoYeT/pagwo4elSg0CbGMOb/form"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block rounded-[3px] bg-brick px-8 py-4 font-sans text-[11px] uppercase tracking-[0.3em] text-[#f6efdd] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#99351f]"
+                  >
+                    Apply
+                  </a>
+                </motion.div>
+              )}
             </motion.div>
+            {phase === "outro" && outroDone && (
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  close();
+                }}
+                className="absolute right-5 top-5 rounded bg-[rgba(20,18,14,0.75)] px-4 py-2.5 font-sans text-[10px] uppercase tracking-[0.26em] text-[#f0e7d3] transition-colors hover:bg-[rgba(20,18,14,0.9)]"
+              >
+                ✕ &nbsp;Close
+              </motion.button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -183,13 +231,13 @@ export default function CrackReveal() {
           playsInline
           controls
           preload="metadata"
-          onEnded={close}
+          onEnded={startOutro}
         />
         <button
-          onClick={close}
+          onClick={startOutro}
           className="absolute right-5 top-5 rounded bg-[rgba(20,18,14,0.75)] px-4 py-2.5 font-sans text-[10px] uppercase tracking-[0.26em] text-[#f0e7d3] transition-colors hover:bg-[rgba(20,18,14,0.9)]"
         >
-          ✕ &nbsp;Close
+          Skip &nbsp;→
         </button>
         {needsSound && phase === "film" && (
           <button
