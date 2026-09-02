@@ -136,11 +136,8 @@ export default function CrackReveal() {
     setNeedsSound(false);
   };
 
-  const lineStyles = [
-    "font-sans text-[13px] uppercase tracking-[0.5em] text-ink-soft/60",
-    "font-serif text-[clamp(1.8rem,4vw,3rem)] italic leading-[1.15] text-ink",
-    "font-serif text-[clamp(1.2rem,2.2vw,1.7rem)] italic text-ink-soft",
-  ];
+  const lineStyle =
+    "font-serif text-[clamp(1.6rem,3.4vw,2.6rem)] italic leading-[1.2] text-ink";
 
   return (
     <>
@@ -162,7 +159,7 @@ export default function CrackReveal() {
               transition={{ duration: 0.5 }}
               className="px-6 text-center"
             >
-              <p className={`min-h-[1.3em] ${lineStyles[line]}`}>
+              <p className={`min-h-[1.3em] ${lineStyle}`}>
                 {LINES[line].slice(0, typed)}
                 <Cursor />
               </p>

@@ -52,6 +52,17 @@ export default function AboutSection() {
             the 7th century, and the Sahara about five hours south of the
             airport.
           </p>
+
+          <div className="pt-4 text-center">
+            <a
+              href="https://airtable.com/appfHYP1FsRGQoYeT/pagwo4elSg0CbGMOb/form"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-[3px] bg-brick px-8 py-4 font-sans text-[11px] uppercase tracking-[0.3em] text-[#f6efdd] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#99351f]"
+            >
+              Apply
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

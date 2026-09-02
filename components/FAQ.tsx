@@ -6,11 +6,15 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 const faqs = [
   {
     q: "What does my ticket cover?",
-    a: "Ticket prices vary based on your selected accommodations, but each ticket is all-inclusive: accommodations for the full week, all meals and beverages, private transport within Tunisia, access to all programming and activities. Not included: your flights to Tunis and any personal shopping.",
+    a: "Ticket prices vary based on your selected accommodations, but each ticket is all-inclusive: accommodations for the full week, most meals and beverages (80%), private transport within Tunisia, access to all programming and activities. Not included: your flights to Tunis and any personal shopping.",
   },
   {
     q: "How do I get there?",
-    a: "Fly into Tunis-Carthage (TUN). We\u2019ll arrange transfers from the airport. Direct flights from Paris, Rome, Istanbul, Frankfurt, and most of Europe; one connection from the US.",
+    a: "Fly into Tunis-Carthage (TUN), about twenty minutes from the hotel. We\u2019ll arrange transfers from the airport. Direct flights from Paris, Rome, Istanbul, Frankfurt, and most of Europe; one connection from the US.",
+  },
+  {
+    q: "What\u2019s the weather like?",
+    a: "High 70s and sunny on the coast in late October. Warm days and genuinely cold nights in the desert.",
   },
   {
     q: "What should I bring?",
@@ -18,7 +22,7 @@ const faqs = [
   },
   {
     q: "How do I apply?",
-    a: "Open to Verci members and everyone else by application through this website.",
+    a: "Open to Verci members and everyone else by application through this website. Applications are open \u2014 we read all of them.",
   },
 ];
 

@@ -195,11 +195,16 @@ export default function Invitation() {
         my.set(0);
       }}
       className="relative flex min-h-dvh flex-col overflow-hidden md:min-h-[calc(100dvh/0.9)]"
-      style={{
-        background:
-          "linear-gradient(180deg, #aebfc9 0%, #c3cbc6 34%, #ddd6bd 62%, #e8dfc4 100%)",
-      }}
     >
+      {/* Sidi Bou Saïd terrace over the bay */}
+      <Image
+        src="/images/hero-sidi-bou-said.jpg"
+        alt="Sidi Bou Saïd terrace overlooking the marina"
+        fill
+        priority
+        className="object-cover"
+        style={{ filter: "sepia(0.18) saturate(0.94) brightness(1.02)" }}
+      />
       <div className="halftone" />
 
       <div className="relative z-[2] flex flex-1 flex-col items-center px-6 pt-[clamp(2rem,5vh,4rem)]">
@@ -403,7 +408,7 @@ export default function Invitation() {
           {/* Whispered hint — device-aware wording */}
           <motion.p
             aria-hidden="true"
-            className="pointer-events-none absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap text-center font-serif text-[0.85rem] italic tracking-wide text-[rgba(74,59,42,0.75)]"
+            className="pointer-events-none absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap text-center font-serif text-[0.85rem] italic tracking-wide text-[rgba(20,16,12,0.9)]"
             style={{ opacity: hintOpacity }}
           >
             <motion.span
@@ -415,27 +420,6 @@ export default function Invitation() {
             </motion.span>
           </motion.p>
         </motion.div>
-      </div>
-
-      {/* Photo fades in from transparent over the header gradient — no
-          color-matched overlay, so there is no seam to see. */}
-      <div
-        className="relative -mt-[clamp(140px,36vh,380px)] h-[clamp(240px,40vh,440px)]"
-        style={{
-          maskImage:
-            "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.35) 35%, rgba(0,0,0,0.8) 58%, #000 78%)",
-          WebkitMaskImage:
-            "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.35) 35%, rgba(0,0,0,0.8) 58%, #000 78%)",
-        }}
-      >
-        <Image
-          src="/images/tunisia-076.jpg"
-          alt="Questers on the dunes of the Sahara"
-          fill
-          priority
-          className="object-cover object-[center_62%]"
-          style={{ filter: "sepia(0.32) saturate(0.92) contrast(0.98) brightness(1.04)" }}
-        />
       </div>
 
     </header>

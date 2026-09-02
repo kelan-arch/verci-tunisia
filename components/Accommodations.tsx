@@ -14,7 +14,7 @@ export default function Accommodations() {
       className="py-[clamp(5rem,11vh,8rem)] text-[#f0e7d3]"
       style={{
         background:
-          "linear-gradient(180deg, var(--color-paper-deep) 0%, var(--color-terracotta) 30%, var(--color-dusk) 70%, #33202a 100%)",
+          "linear-gradient(180deg, var(--color-paper-deep) 0%, var(--color-terracotta) 30%, var(--color-dusk) 75%, var(--color-dusk) 100%)",
       }}
     >
       <div className="mx-auto w-[min(1120px,92vw)]">
@@ -48,6 +48,16 @@ export default function Accommodations() {
               The last night there&rsquo;s no hotel at all. Tents, bedrolls, and
               open sky in the Grand Erg Oriental.
             </p>
+            <div className="pt-4 text-center">
+              <a
+                href="https://airtable.com/appfHYP1FsRGQoYeT/pagwo4elSg0CbGMOb/form"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-[3px] bg-brick px-8 py-4 font-sans text-[11px] uppercase tracking-[0.3em] text-[#f6efdd] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#99351f]"
+              >
+                Apply
+              </a>
+            </div>
           </motion.div>
 
           <motion.div

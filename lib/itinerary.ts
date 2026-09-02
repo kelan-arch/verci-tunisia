@@ -21,7 +21,7 @@ export const days: ItineraryDay[] = [
     date: "19 OCT 2026",
     code: "TUN",
     description:
-      "We take over a hotel on the coast just north of Carthage and use it as a basecamp. Mornings are for working and hanging out, with some small programming. Golden Carthage Hotel & Résidence — seafront, ten minutes from Sidi Bou Saïd, with the promenade and the beach in walking distance.",
+      "We take over a hotel on the coast just north of Carthage and use it as a basecamp. Mornings are for working and hanging out, plus the Verci programming — fireside chats, office hours, and workshops built around what this particular group wants. We'll ask you before we go. Golden Carthage Hotel & Résidence — seafront, ten minutes from Sidi Bou Saïd, with the promenade and the beach in walking distance.",
     image: "/images/brochure/sidi-bou-said-street.jpg",
   },
   {
@@ -65,7 +65,7 @@ export const days: ItineraryDay[] = [
     date: "23 OCT 2026",
     code: "TOZ",
     description:
-      "Coast to steppe to palm grove over about seven hours, with lunch at Tamarza when we arrive. Then the mountain oases — Tamarza, Chébika, and Midès — where springs and waterfalls run through the rock and a canyon opens up under your feet. Late afternoon at Mos Espa near Nefta, the Star Wars set that's still sitting out in the sand, with a drink while the sun goes down.",
+      "Coast to steppe to palm grove over about seven hours, with lunch at Tamarza when we arrive. Then the mountain oases — Tamarza, Chébika, and Midès — where springs and waterfalls run through the rock and a canyon opens up under your feet. Late afternoon at Mos Espa near Nefta, the Star Wars set that's still sitting out in the sand, with a drink while the sun goes down. The plains next door are where they shot The English Patient.",
     image: "/images/brochure/tozeur-palms.jpg",
   },
   {

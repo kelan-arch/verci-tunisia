@@ -5,8 +5,6 @@ import TheWeek from "@/components/TheWeek";
 import InstagramEmbed from "@/components/InstagramEmbed";
 import Accommodations from "@/components/Accommodations";
 import WhosComing from "@/components/WhosComing";
-import Activities from "@/components/Activities";
-import GettingThere from "@/components/GettingThere";
 import RouteMap from "@/components/RouteMap";
 import Postcards from "@/components/Postcards";
 import FAQ from "@/components/FAQ";
@@ -23,9 +21,7 @@ export default function Home() {
       <RouteMap />
       <Accommodations />
       <WhosComing />
-      <Activities />
       <Postcards />
-      <GettingThere />
       <InstagramEmbed />
       <FAQ />
       <JoinCTA />

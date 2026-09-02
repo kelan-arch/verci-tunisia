@@ -13,7 +13,7 @@ export default function WhosComing() {
       className="sec-screen py-[clamp(4rem,8vh,6rem)]"
       style={{
         background:
-          "linear-gradient(180deg, #33202a 0%, var(--color-nightblue) 45%, #2a1a14 70%, var(--color-dusk) 88%, var(--color-terracotta) 100%)",
+          "linear-gradient(180deg, var(--color-nightblue) 0%, var(--color-nightblue) 45%, #2a1a14 70%, var(--color-dusk) 88%, var(--color-terracotta) 100%)",
       }}
     >
       <div className="mx-auto grid w-[min(1120px,92vw)] gap-x-16 gap-y-14 md:grid-cols-2">
