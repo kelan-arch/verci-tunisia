@@ -5,6 +5,10 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 
 const faqs = [
   {
+    q: "How much does the Tunisia Retreat cost?",
+    a: "The retreat offers two pricing options:\n\n1/ Shared Apartment & Lodge \u2014 $1.75k: Shared apartment at Golden Carthage and shared lodge at Diar Abou Habibi (sharing one king bed with another person of the same gender).\n\n2/ Single Apartment + Lodge \u2014 $2.19k: Your own private apartment at Golden Carthage and your own private lodge at Diar Abou Habibi.\n\nBoth options include breakfast daily, lunch on two days, dinner on two days, and all activities and transport \u2014 including private transfers throughout, a guided oasis day with sunset aperitif, a night with the nomads in the Sahara, a visit to an olive farm, a full-day catamaran trip off Cap Bon, a guided medina walk, workshops, and more.",
+  },
+  {
     q: "What does my ticket cover?",
     a: "Ticket prices vary based on your selected accommodations, but each ticket is all-inclusive: accommodations for the full week, most meals and beverages (80%), private transport within Tunisia, access to all programming and activities. Not included: your flights to Tunis and any personal shopping.",
   },
@@ -80,7 +84,7 @@ export default function FAQ() {
                       transition={{ duration: 0.35, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <p className="pb-6 pr-12 font-sans text-[clamp(0.92rem,1.3vw,1.05rem)] leading-[1.7] text-[rgba(233,226,210,0.7)]">
+                      <p className="whitespace-pre-line pb-6 pr-12 font-sans text-[clamp(0.92rem,1.3vw,1.05rem)] leading-[1.7] text-[rgba(233,226,210,0.7)]">
                         {faq.a}
                       </p>
                     </motion.div>
