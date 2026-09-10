@@ -14,10 +14,19 @@ export default function TheWeek() {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}
-          className="mb-12 font-serif text-[clamp(2rem,5vw,3.6rem)] font-medium leading-[1.08]"
+          className="mb-3 font-serif text-[clamp(2rem,5vw,3.6rem)] font-medium leading-[1.08]"
         >
           The week
         </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.9, delay: 0.1 }}
+          className="mb-12 font-serif text-[clamp(1.15rem,1.8vw,1.45rem)] italic text-brick"
+        >
+          October 19&ndash;26, 2026
+        </motion.p>
 
         <div className="grid grid-cols-1 gap-[clamp(2rem,5vw,4rem)] md:grid-cols-2">
           {/* Days 1–4 */}
